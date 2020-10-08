@@ -51,7 +51,8 @@ function ContextProvider(props) {
                 }
             }
             const array = user.scoreArray
-            return sortArrDescending(array)
+            sortArrDescending(array)
+            return user
             // sortArrDescending(user.scoreArray)
         })
         return userWithScoreArray
@@ -66,7 +67,7 @@ function ContextProvider(props) {
             // const highestScores = highestScorePerUser(scores)
             const userWithScores = addScoreToUser(scores, users)
             console.log('userWithScores',userWithScores)
-            
+            // const sortedUsers = sor
             setUsersArr(userWithScores)
         } else {
             //show error
