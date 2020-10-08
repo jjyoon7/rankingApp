@@ -34,6 +34,58 @@ function ContextProvider(props) {
         }
     }, [])
 
+    //collect all the scores of the user
+    // const userScoresArray = array => array.reduce((accumulator, current) => {
+    //     for(var i = 0; i < array.length; i++) {
+    //         if (checkIfIdExists(current)) {  
+    //             //   console.log('accumulator',accumulator)
+    //               return accumulator
+    //             } else {
+    //               return [...accumulator, current]
+    //             }
+              
+    //             function checkIfIdExists(currentVal) {
+    //                 return accumulator.some((item) => {
+    //                     // console.log('item',item)
+    //                     // console.log('currentVal',currentVal)
+    //                   if(item.userId === currentVal.userId) {
+    //                        item.scoreArray = []
+    //                     //    const result = Math.max(currentVal.score, item.score)
+    //                        item.scoreArray.push(currentVal.score)
+    //                        return item.userId === currentVal.userId
+    //                   }
+    //                 })
+    //             }
+    //     }
+    // }, [])
+
+    // const userScoresArray = array => array.map(el => {
+    //     console.log('array', array)
+    //     console.log('el', el)
+    //     for(var i = 0; i < array.length; i++) {
+    //         if(array[i].userId === el.userId) {
+    //             el.scoreArray = []
+    //             el.scoreArray.push(array[i].score)
+    //             return el
+    //         }
+    //     }
+    // }, [])
+
+    const userScoresArray = (scoreArray, userArray) => {
+        // console.log('scoreArray',scoreArray)
+        // console.log('userArray',userArray)
+        // console.log('scoreArray.length', scoreArray.length)
+        for (var i = 0; i < scoreArray.length; i++) {
+            console.log('scoreArray[i].userId === userArray[i]._id', scoreArray[i].userId === userArray[i]._id)
+            if(scoreArray[i].userId === userArray[i]._id) {
+                userArray[i].scoreArray = []
+                userArray[i].scoreArray.push(scoreArray[i].score)
+                // return userArray[i]
+                // userArray[i].score = scoreArray[i].score
+            }
+        }
+    }
+
     //merge highestScorePerUser and add those fields to user obj.
     const addScoreToUser = (scoreArray, userArray) => {
         // console.log('scoreArray',scoreArray)
@@ -64,6 +116,8 @@ function ContextProvider(props) {
             
             setUsersArr(sortedUsers)
             // setScoresArr(scores)
+            const userAllScores = userScoresArray(scores, users)
+            console.log('userAllScores',userAllScores)
         } else {
             //show error
         }
@@ -72,8 +126,13 @@ function ContextProvider(props) {
 
     return (
         <Context.Provider value={{
+                                    usersArr,
+                                    setUsersArr,
+                                    scoresArr, 
+                                    setScoresArr,
                                     parsedDataArr,
                                     setParsedDataArr,
+                                    sortArrDescending,
         }}>
             {props.children}
         </Context.Provider>
