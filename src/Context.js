@@ -49,18 +49,6 @@ function ContextProvider(props) {
                     }
                 }
             }
-
-            if(scoreArrayKey === 'name') {
-                for (var i = 0; i < scoreArray.length; i++) {
-                    console.log('scoreArray[i].name === user.name', scoreArray[i].name === user.name)
-                    if(scoreArray[i].name === user.name) {
-                        user.scoreArray.push(scoreArray[i].score)
-                    } else {
-                        addNewUser(scoreArray[i].name, scoreArray[i].score)
-                    }
-                }
-            }
-
             //sort the scores in score array of user 
             //in descending order
             const array = user.scoreArray
@@ -88,21 +76,6 @@ function ContextProvider(props) {
 
     const addNewUser = (userName, userScore) => {
         const clonedUsersArr = [...usersArr]
-        // const usersArrWithNewUsers = usersArr.map(user => {
-        //     if(!user.name.toLowerCase() === userName.toLowerCase()) {
-        //         const newUserObj = {
-        //             _id: usersArr.length + 1,
-        //             name: userName,
-        //             scoreArray: [userScore]
-        //         }
-
-        //         clonedUsersArr.push(newUserObj)
-        //         sortArrDescending(clonedUsersArr)
-        //         return user
-        //     } else return user
-        // })
-
-        // setUsersArr(usersArrWithNewUsers)
 
         const newUserObj = {
             _id: usersArr.length + 1,
@@ -134,37 +107,8 @@ function ContextProvider(props) {
         console.log('usersArr updated', usersArr)
     }, [ usersArr ])
 
-    const parsedScoreToUser = (parsedArray, usersArray) => {
-        const userWithScoreArray = usersArray.map(user => {
-            // user.scoreArray = []
-            console.log('parsedArray.length',parsedArray.length)
-            for (var i = 0; i < parsedArray.length; i++) {
-                if(parsedArray[i].name === user.name) {
-                    user.scoreArray.push(parsedArray[i].score)
-                }
-            }
-            //sort the scores in score array of user 
-            //in descending order
-            const array = user.scoreArray
-            sortArrDescending(array)
-            return user
-        })
-        return userWithScoreArray
-    }
-
     //if user sheet data been saved to arr 
     useEffect(() => {
-        // const userWithParsedScores = addScoreArrayToUsersArray(parsedDataArr, usersArr)
-
-
-        // const sortedUsersWithParsedScores = sortArrDescending(userWithParsedScores)
-        // console.log('sortedUsersWithParsedScores', sortedUsersWithParsedScores)
-        // setUsersArr(sortedUsersWithParsedScores)
-        
-        
-        
-        // const updateVer = parsedScoreToUser(parsedDataArr, usersArr)
-        // console.log('parsedDataArr.length',parsedDataArr.length)
         const updatedUserArrWithParsedData = parsedDataArr.map(data => {
             // console.log('user from parsedDataArr', user)
             if(userAlreadyExists(data.name)) {
@@ -174,6 +118,7 @@ function ContextProvider(props) {
             } else if(!userAlreadyExists(data.name)) {
                 // console.log('user dont exists')
                 addNewUser(data.name, data.score)
+                //maybe need use .reduce() here to narrow down the duplicate user name objects?
                 // console.log('result', result)
                 // return data
             }
