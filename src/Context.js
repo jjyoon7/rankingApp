@@ -34,7 +34,8 @@ function ContextProvider(props) {
                     user.scoreArray.push(scoreArray[i].score)
                 }
             }
-            //sort the score array of user in descending order
+            //sort the scores in score array of user 
+            //in descending order
             const array = user.scoreArray
             sortArrDescending(array)
             return user

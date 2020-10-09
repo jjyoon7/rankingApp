@@ -1,0 +1,6 @@
+.user-li {
+    display: flex;
+    justify-content: space-between;
+    max-width: 30%;
+    /* background-color: red; */
+}
