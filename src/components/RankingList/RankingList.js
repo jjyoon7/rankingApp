@@ -9,6 +9,7 @@ export default function RankingList() {
     const [ rankingList, setRankingList ] = useState(null)
 
     useEffect(() => {
+        console.log('render ranking list')
         const mappedUsersList = usersArr.map(user => {
             console.log('user', user)
             return <RankingListElement key={user._id} id={user._id} name={user.name} score={user.scoreArray[0]}/>
