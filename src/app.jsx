@@ -6,6 +6,7 @@ import { Context } from './Context'
 
 import RankingList from './components/RankingList/RankingList'
 import UserScoreList from './components/UserScoreList/UserScoreList'
+import UserInputForm from './components/UserInputForm/UserInputForm'
 
 export default function Main() {
   const { setParsedDataArr } = useContext(Context)
@@ -28,6 +29,9 @@ export default function Main() {
         </MTColumn>
         <MTColumn width={ 75 } offset={ 5 }>
           <RankingList/>
+        </MTColumn>
+        <MTColumn>
+          <UserInputForm/>
         </MTColumn>
       </MTRow>
       <MTRow>

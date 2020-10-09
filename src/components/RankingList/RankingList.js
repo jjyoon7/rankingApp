@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Context } from '../../Context'
-import RankingElement from '../RankingElement/RankingElement'
+import RankingListElement from '../RankingListElement/RankingListElement'
 
 import './RankingList.css'
 
@@ -11,7 +11,7 @@ export default function RankingList() {
     useEffect(() => {
         const mappedUsersList = usersArr.map(user => {
             console.log('user', user)
-            return <RankingElement key={user._id} id={user._id} name={user.name} score={user.scoreArray[0]}/>
+            return <RankingListElement key={user._id} id={user._id} name={user.name} score={user.scoreArray[0]}/>
         })
 
         setRankingList(mappedUsersList)

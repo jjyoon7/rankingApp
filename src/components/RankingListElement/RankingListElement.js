@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../../Context'
-import './RankingElement.css'
+import './RankingListElement.css'
 
-export default function RankingElement({ id, name, score }) {
+export default function RankingListElement({ id, name, score }) {
     const { usersArr, toggleModal, setUserScoreArr } = useContext(Context)
 
     const getSelectedUsersScoreArray = (id) => {
@@ -27,7 +27,7 @@ export default function RankingElement({ id, name, score }) {
         // console.log('click on user', id)
         const userScores = getSelectedUsersScoreArray(id)
         setUserScoreArr(userScores)
-        console.log('userScores', userScores)
+        // console.log('userScores', userScores)
 
     }
 

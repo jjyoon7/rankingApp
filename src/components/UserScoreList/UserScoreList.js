@@ -9,20 +9,24 @@ export default function UserScoreList() {
 
     // const userScoreListModal = useModal(isModalOpen, userScoreList)
 
+    const onClickUserScoreList = () => {
+
+    }
+
     useEffect(() => {
         const mappedScoreList = userScoreArr.map(score => {
-            console.log('score', score)
+            // console.log('score', score)
             return <li key={score} className='score-li'>
                         {score}
                   </li>
         })
         
         setUserScoreList(mappedScoreList)
-        console.log('mappedScoreList', mappedScoreList)
+        // console.log('mappedScoreList', mappedScoreList)
     }, [ userScoreArr ])
 
     return (
-        <div className='user-score-list-div'>
+        <div className='user-score-list-div' onClick={onClickUserScoreList}>
             <ul className='user-score-list-ul'>
                 {userScoreList}
             </ul>
