@@ -34,14 +34,33 @@ function ContextProvider(props) {
     })
 
     //add score to the user
-    const addScoreToUser = (scoreArray, usersArray) => {
+    const addScoreArrayToUsersArray = (scoreArray, usersArray) => {
         const userWithScoreArray = usersArray.map(user => {
             user.scoreArray = []
-            for (var i = 0; i < scoreArray.length; i++) {
-                if(scoreArray[i].userId === user._id) {
-                    user.scoreArray.push(scoreArray[i].score)
+
+            const scoreArrayKey = Object.keys(scoreArray[0])[0]
+            
+            // console.log('Object.keys(scoreArray[0])', Object.keys(scoreArray[0])[0])
+            // if(scoreArray)
+            if(scoreArrayKey === 'userId') {
+                for (var i = 0; i < scoreArray.length; i++) {
+                    if(scoreArray[i].userId === user._id) {
+                        user.scoreArray.push(scoreArray[i].score)
+                    }
                 }
             }
+
+            if(scoreArrayKey === 'name') {
+                for (var i = 0; i < scoreArray.length; i++) {
+                    console.log('scoreArray[i].name === user.name', scoreArray[i].name === user.name)
+                    if(scoreArray[i].name === user.name) {
+                        user.scoreArray.push(scoreArray[i].score)
+                    } else {
+                        addNewUser(scoreArray[i].name, scoreArray[i].score)
+                    }
+                }
+            }
+
             //sort the scores in score array of user 
             //in descending order
             const array = user.scoreArray
@@ -54,20 +73,36 @@ function ContextProvider(props) {
     const updateUserScoreArray = (name, score) => {
         const updatedUsersArr = usersArr.map(user => {
             if(user.name.toLowerCase() === name.toLowerCase()) {
-                        user.scoreArray.push(score)
+                user.scoreArray.push(score)
 
-                        //order the list by highest score
-                        sortArrDescending(user.scoreArray)
-                        return user
-                    } else return user
-            })
+                //order the list by highest score
+                sortArrDescending(user.scoreArray)
+                return user
+            } else return user
+        })
         
-            const orderedUpdatedList = sortArrDescending(updatedUsersArr)
-            setUsersArr(orderedUpdatedList)
+        const orderedUpdatedList = sortArrDescending(updatedUsersArr)
+        setUsersArr(orderedUpdatedList)
+        // return usersArr
     }
 
     const addNewUser = (userName, userScore) => {
         const clonedUsersArr = [...usersArr]
+        // const usersArrWithNewUsers = usersArr.map(user => {
+        //     if(!user.name.toLowerCase() === userName.toLowerCase()) {
+        //         const newUserObj = {
+        //             _id: usersArr.length + 1,
+        //             name: userName,
+        //             scoreArray: [userScore]
+        //         }
+
+        //         clonedUsersArr.push(newUserObj)
+        //         sortArrDescending(clonedUsersArr)
+        //         return user
+        //     } else return user
+        // })
+
+        // setUsersArr(usersArrWithNewUsers)
 
         const newUserObj = {
             _id: usersArr.length + 1,
@@ -75,20 +110,18 @@ function ContextProvider(props) {
             scoreArray: [userScore]
         }
 
-        console.log('newUserObj',newUserObj)
-
         clonedUsersArr.push(newUserObj)
         
-        //order the list by highest score
-        sortArrDescending(clonedUsersArr)
-        setUsersArr(clonedUsersArr)    
+        const orderedArray = sortArrDescending(clonedUsersArr)
+        setUsersArr(orderedArray)
+   
     }
 
     //when app is first initially loaded
     //save users and scores in state
     useEffect(() => {
         if(hasUsers && hasScores) {
-            const userWithScores = addScoreToUser(scores, users)
+            const userWithScores = addScoreArrayToUsersArray(scores, users)
             const sortedUsers = sortArrDescending(userWithScores)
             setUsersArr(sortedUsers)
         } else {
@@ -98,20 +131,56 @@ function ContextProvider(props) {
 
     //to check if usersArr is updated with correct order
     useEffect(() => {
-        console.log('usersArr', usersArr)
+        console.log('usersArr updated', usersArr)
     }, [ usersArr ])
 
-    //if user sheet data been saved to arr, 
-    useEffect(() => {
-        parsedDataArr.map(user => {
-            console.log('user from parsedDataArr', user)
+    const parsedScoreToUser = (parsedArray, usersArray) => {
+        const userWithScoreArray = usersArray.map(user => {
+            // user.scoreArray = []
+            console.log('parsedArray.length',parsedArray.length)
+            for (var i = 0; i < parsedArray.length; i++) {
+                if(parsedArray[i].name === user.name) {
+                    user.scoreArray.push(parsedArray[i].score)
+                }
+            }
+            //sort the scores in score array of user 
+            //in descending order
+            const array = user.scoreArray
+            sortArrDescending(array)
+            return user
         })
-    //check if there is a user exists in usersArr
-    
-    //if not, just add it as a new user
+        return userWithScoreArray
+    }
+
+    //if user sheet data been saved to arr 
+    useEffect(() => {
+        // const userWithParsedScores = addScoreArrayToUsersArray(parsedDataArr, usersArr)
 
 
-    // replace this log with actual handling of the data
+        // const sortedUsersWithParsedScores = sortArrDescending(userWithParsedScores)
+        // console.log('sortedUsersWithParsedScores', sortedUsersWithParsedScores)
+        // setUsersArr(sortedUsersWithParsedScores)
+        
+        
+        
+        // const updateVer = parsedScoreToUser(parsedDataArr, usersArr)
+        // console.log('parsedDataArr.length',parsedDataArr.length)
+        const updatedUserArrWithParsedData = parsedDataArr.map(data => {
+            // console.log('user from parsedDataArr', user)
+            if(userAlreadyExists(data.name)) {
+                // console.log('user exists')
+                updateUserScoreArray(data.name, data.score)
+                // return data
+            } else if(!userAlreadyExists(data.name)) {
+                // console.log('user dont exists')
+                addNewUser(data.name, data.score)
+                // console.log('result', result)
+                // return data
+            }
+            // return data
+        })
+        console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
+        // setUsersArr(updateData)
     }, [ parsedDataArr ])
 
 

@@ -4,7 +4,7 @@ import { Context } from '../../Context'
 // import useModal from '../../customHooks/useModal/useModal'
 
 export default function UserScoreList() {
-    const { isModalOpen, userScoreArr } = useContext(Context)
+    const { usersArr, userScoreArr } = useContext(Context)
     const [ userScoreList, setUserScoreList ] = useState(null)
 
     // const userScoreListModal = useModal(isModalOpen, userScoreList)
@@ -23,7 +23,7 @@ export default function UserScoreList() {
         
         setUserScoreList(mappedScoreList)
         // console.log('mappedScoreList', mappedScoreList)
-    }, [ userScoreArr ])
+    }, [ userScoreArr, usersArr ])
 
     return (
         <div className='user-score-list-div' onClick={onClickUserScoreList}>
