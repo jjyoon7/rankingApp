@@ -13,15 +13,12 @@ function ContextProvider(props) {
 
     const [ parsedDataArr, setParsedDataArr ] = useState([])
 
-    const [ isModalOpen, setIsModalOpen ] = useState(false)
-
     const hasUsers = users.length > 0
     const hasScores = scores.length > 0
 
-    const toggleModal = () => {
-        setIsModalOpen(!isModalOpen)
-        console.log(isModalOpen)
-    }
+    const userAlreadyExists = (userName) => usersArr.some(user => {
+        return user.name.toLowerCase() === userName.toLowerCase()
+    })
 
     //sort array
     const sortArrDescending = array => array.sort((prevValue, currentValue) => {
@@ -54,6 +51,39 @@ function ContextProvider(props) {
         return userWithScoreArray
     }
 
+    const updateUserScoreArray = (name, score) => {
+        const updatedUsersArr = usersArr.map(user => {
+            if(user.name.toLowerCase() === name.toLowerCase()) {
+                        user.scoreArray.push(score)
+
+                        //order the list by highest score
+                        sortArrDescending(user.scoreArray)
+                        return user
+                    } else return user
+            })
+        
+            const orderedUpdatedList = sortArrDescending(updatedUsersArr)
+            setUsersArr(orderedUpdatedList)
+    }
+
+    const addNewUser = (userName, userScore) => {
+        const clonedUsersArr = [...usersArr]
+
+        const newUserObj = {
+            _id: usersArr.length + 1,
+            name: userName,
+            scoreArray: [userScore]
+        }
+
+        console.log('newUserObj',newUserObj)
+
+        clonedUsersArr.push(newUserObj)
+        
+        //order the list by highest score
+        sortArrDescending(clonedUsersArr)
+        setUsersArr(clonedUsersArr)    
+    }
+
     //when app is first initially loaded
     //save users and scores in state
     useEffect(() => {
@@ -71,6 +101,19 @@ function ContextProvider(props) {
         console.log('usersArr', usersArr)
     }, [ usersArr ])
 
+    //if user sheet data been saved to arr, 
+    useEffect(() => {
+        parsedDataArr.map(user => {
+            console.log('user from parsedDataArr', user)
+        })
+    //check if there is a user exists in usersArr
+    
+    //if not, just add it as a new user
+
+
+    // replace this log with actual handling of the data
+    }, [ parsedDataArr ])
+
 
     return (
         <Context.Provider value={{
@@ -81,7 +124,10 @@ function ContextProvider(props) {
                                     parsedDataArr,
                                     setParsedDataArr,
                                     sortArrDescending,
-                                    toggleModal,
+                                    userAlreadyExists,
+                                    updateUserScoreArray,
+                                    addNewUser,
+
         }}>
             {props.children}
         </Context.Provider>

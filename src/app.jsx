@@ -9,12 +9,19 @@ import UserScoreList from './components/UserScoreList/UserScoreList'
 import UserInputForm from './components/UserInputForm/UserInputForm'
 
 export default function Main() {
-  const { setParsedDataArr } = useContext(Context)
+  const { setParsedDataArr, userAlreadyExists, updateUserScoreArray, addNewUser } = useContext(Context)
 
   const handleSheetData = (data) => {
+    //saved the data in parsedDataArr
     setParsedDataArr(data)
+
+    //check if there is a user exists in usersArr
+
+    //if not, just add it as a new user
+
+
     // replace this log with actual handling of the data
-    console.log(data)
+    console.log('data from sheet',data)
   }
 
   return (

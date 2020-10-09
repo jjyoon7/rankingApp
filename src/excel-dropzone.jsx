@@ -15,7 +15,7 @@ function ExcelDropzone (props) {
       props.onSheetDrop(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]))
     }
     reader.readAsBinaryString(file)
-    console.log('file', file)
+    // console.log('file', file)
   }
   
   return (
