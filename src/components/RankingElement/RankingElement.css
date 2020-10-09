@@ -4,3 +4,7 @@
     max-width: 30%;
     /* background-color: red; */
 }
+
+.user-name-h2 {
+    cursor: pointer;
+}

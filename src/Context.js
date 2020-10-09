@@ -5,12 +5,23 @@ const Context = React.createContext()
 
 
 function ContextProvider(props) {
+    //users array
     const [ usersArr, setUsersArr ] = useState([])
-    const [ scoresArr, setScoresArr ] = useState([])
+
+    //individual user's score array
+    const [ userScoreArr, setUserScoreArr] = useState([])
+
     const [ parsedDataArr, setParsedDataArr ] = useState([])
+
+    const [ isModalOpen, setIsModalOpen ] = useState(false)
 
     const hasUsers = users.length > 0
     const hasScores = scores.length > 0
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+        console.log(isModalOpen)
+    }
 
     //sort array
     const sortArrDescending = array => array.sort((prevValue, currentValue) => {
@@ -65,11 +76,12 @@ function ContextProvider(props) {
         <Context.Provider value={{
                                     usersArr,
                                     setUsersArr,
-                                    scoresArr, 
-                                    setScoresArr,
+                                    userScoreArr,
+                                    setUserScoreArr,
                                     parsedDataArr,
                                     setParsedDataArr,
                                     sortArrDescending,
+                                    toggleModal,
         }}>
             {props.children}
         </Context.Provider>
