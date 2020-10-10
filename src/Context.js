@@ -149,30 +149,20 @@ function ContextProvider(props) {
             const updatedUserArrWithParsedData = reducedParsedDataArr.map(data => {
                 // console.log('data from parsedDataArr', data)
                 if(userAlreadyExists(data.name, usersArr)) {
-
-                    // updateUserScoreArray(data.name,)
-                    // console.log('user exists')
                     const usersArrUpdateWithParsedScores = usersArr.map(user => {
+                        //this is similar to 'updateUserScoreArray', maybe update 'updateUserScoreArray' so it could be used here as well
                         if(user.name === data.name) {
                             //maybe need to check if there is a duplicate score?
-                            console.log('after pushing to user array before', user.scoreArray)
+                            // console.log('after pushing to user array before', user.scoreArray)
                             user.scoreArray.push(...data.scoreArray)
-                            // user.scoreArray
-                            
                             sortArrDescending(user.scoreArray)
-                            console.log('after pushing to user array after and sorting', user.scoreArray)
+                            // console.log('after pushing to user array after and sorting', user.scoreArray)
                             return user
                         } else return user
                     })
-                    // console.log('users score array update', usersArrUpdateWithParsedScores)
+
                     return usersArrUpdateWithParsedScores
-                    //need to add what is in the data.scoreArray to users.scoreArray
-                    // const addParsedDataScoreArrayToUsersScoreArray = data.scoreArray.map(score => {
-                    //     updateUserScoreArray(data.name, score)
-                    //     return updateUserScoreArray(data.name, score)
-                    // })
-                    // console.log('addParsedDataScoreArrayToUsersScoreArray', addParsedDataScoreArrayToUsersScoreArray)
-                    // return addParsedDataScoreArrayToUsersScoreArray
+
                 } else if(!userAlreadyExists(data.name, usersArr)) {
                     // console.log('user dont exists')
                     addNewUser(data.name, data.score)
