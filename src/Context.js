@@ -141,33 +141,28 @@ function ContextProvider(props) {
 
             console.log('reducedParsedDataArr', reducedParsedDataArr)
 
-            // const nameAlreadyExists = usersArr.includes(nameReduced)
-
             //2. after parsed data is reduced,
             //compare that reducedParsedArry with usersArr
             //if the name exists, add the parsedArr's socres to user's scoreArray
             //otherwise add as new user object with its scores.
 
-            //loop over each data
-            //and either add to existing user's scoreArray
-            //or create a new user object.
-            //but this will have an issue
-            // const updatedUserArrWithParsedData = parsedDataArr.map(data => {
-            //     // console.log('user from parsedDataArr', user)
-            //     if(userAlreadyExists(data.name)) {
-            //         // console.log('user exists')
-            //         updateUserScoreArray(data.name, data.score)
-            //         // return data
-            //     } else if(!userAlreadyExists(data.name)) {
-            //         // console.log('user dont exists')
-            //         addNewUser(data.name, data.score)
-            //         // return data
-            //     }
-            //     //what to return here?
-            //     //return usersArr
-            // })
+            const updatedUserArrWithParsedData = reducedParsedDataArr.map(data => {
+                // console.log('user from parsedDataArr', user)
+                if(userAlreadyExists(data.name, usersArr)) {
+                    // console.log('user exists')
+                    updateUserScoreArray(data.name, data.score)
+                    return data
+                } else if(!userAlreadyExists(data.name, usersArr)) {
+                    // console.log('user dont exists')
+                    addNewUser(data.name, data.score)
+                    return data
+                }
+                //what to return here?
+                //return usersArr
+            })
+            const orderedUsersArr = sortArrDescending(updatedUserArrWithParsedData)
             // console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
-            // setUsersArr(updateData)
+            setUsersArr(orderedUsersArr)
         } else {
             //show parse error
         }
