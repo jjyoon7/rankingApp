@@ -127,31 +127,36 @@ function ContextProvider(props) {
             //1. reduce the parsed data, if the name exists, add the score to that name
             //other wise create a new user object and save that to the base array
             const dataReduced = parsedDataArr.reduce((acc, cur) => {
-                console.log('acc', acc)
-                console.log('cur',cur.name)
-                
-                //acc is an array, with objects.
-                //if acc array alreay has an object with name value
-                //which is same as cur.name
-                //then push cur.score to that matching name's scoreArray
-
-                //if it is not matching,
-                //create a new obj
-                // const nameAlreadyExists = acc.includes(cur.name)
-                // console.log('nameAlreadyExists', nameAlreadyExists)
-
 
                 const nameAlreadyExists = (userName) => acc.some(data => {
+                    console.log('data', data.name)
                     return data.name.toLowerCase() === userName.toLowerCase()
                 })
                 
                 if (nameAlreadyExists(cur.name)) {
                     // console.log('name exists')
-                    console.log('acc.cur when name exists', acc.cur)
-                    // acc.cur.scoreArray.push(cur.score)
-                    return acc
+
+                    //userObject.score is single score
+                    //at one point, need to create an empty array and store it there
+                    const updatedArrayWithNewScore = acc.map(userObject => {
+                        console.log('userObject', userObject)
+                        if(userObject.name === cur.name) {
+                            userObject.scoreArray.push(cur.score)
+                            sortArrDescending(userObject.scoreArray)
+                            return userObject
+                        } else return userObject
+                    })
+
+                    console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
+                    return updatedArrayWithNewScore
+
                 } else if (!nameAlreadyExists(cur.name)) {
-                    console.log('///name does not exists')
+                    // console.log('///name does not exists')
+                    cur.scoreArray = []
+                    cur.scoreArray.push(cur.score)
+                    delete cur.score
+                    console.log('cur when user does not exists', cur)
+                    // cur.pop(cur.score)
                     acc.push(cur)
                     return acc
                 }
