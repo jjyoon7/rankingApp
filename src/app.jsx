@@ -14,7 +14,7 @@ export default function Main() {
   const handleSheetData = (data) => {
     //saved the data in parsedDataArr
     setParsedDataArr(data)
-    console.log('data from sheet',data)
+    // console.log('data from sheet',data)
   }
 
   return (
