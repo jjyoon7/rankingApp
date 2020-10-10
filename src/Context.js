@@ -54,10 +54,29 @@ function ContextProvider(props) {
         return userWithScoreArray
     }
 
-    const updateUserScoreArray = (name, score) => {
+    // const updateUserScoreArray = (name, score) => {
+    //     const updatedUsersArr = usersArr.map(user => {
+    //         if(user.name.toLowerCase() === name.toLowerCase()) {
+    //             user.scoreArray.push(score)
+
+    //             //order the list by highest score
+    //             sortArrDescending(user.scoreArray)
+    //             return user
+    //         } else return user
+    //     })
+        
+    //     const orderedUpdatedList = sortArrDescending(updatedUsersArr)
+    //     setUsersArr(orderedUpdatedList)
+    //     // return usersArr
+    // }
+
+    const updateUserScoreArray = (name, score, scoreType) => {        
         const updatedUsersArr = usersArr.map(user => {
             if(user.name.toLowerCase() === name.toLowerCase()) {
-                user.scoreArray.push(score)
+                
+                if(scoreType === 'array') user.scoreArray.push(...score)
+
+                if(scoreType === 'number') user.scoreArray.push(score)
 
                 //order the list by highest score
                 sortArrDescending(user.scoreArray)
@@ -65,8 +84,9 @@ function ContextProvider(props) {
             } else return user
         })
         
-        const orderedUpdatedList = sortArrDescending(updatedUsersArr)
-        setUsersArr(orderedUpdatedList)
+        sortArrDescending(updatedUsersArr)
+        return updatedUsersArr
+        // setUsersArr(orderedUpdatedList)
         // return usersArr
     }
 
@@ -106,9 +126,9 @@ function ContextProvider(props) {
     }, [])
 
     //to check if usersArr is updated with correct order
-    useEffect(() => {
-        console.log('usersArr updated', usersArr)
-    }, [ usersArr ])
+    // useEffect(() => {
+    //     console.log('usersArr updated', usersArr)
+    // }, [ usersArr ])
 
     //if user sheet data been saved to arr 
     useEffect(() => {
@@ -152,19 +172,22 @@ function ContextProvider(props) {
             const updatedUserArrWithParsedData = reducedParsedDataArr.map(data => {
                 // console.log('data from parsedDataArr', data)
                 if(userAlreadyExists(data.name, usersArr)) {
-                    const usersArrUpdateWithParsedScores = usersArr.map(user => {
-                        //this is similar to 'updateUserScoreArray', maybe update 'updateUserScoreArray' so it could be used here as well
-                        if(user.name === data.name) {
-                            //maybe need to check if there is a duplicate score?
-                            // console.log('after pushing to user array before', user.scoreArray)
-                            user.scoreArray.push(...data.scoreArray)
-                            sortArrDescending(user.scoreArray)
-                            // console.log('after pushing to user array after and sorting', user.scoreArray)
-                            return user
-                        } else return user
-                    })
 
-                    return usersArrUpdateWithParsedScores
+                    const usersArrWithNewScores = updateUserScoreArray(data.name, data.scoreArray, 'array')
+                    // const usersArrUpdateWithParsedScores = usersArr.map(user => {
+                    //     //this is similar to 'updateUserScoreArray', maybe update 'updateUserScoreArray' so it could be used here as well
+                    //     if(user.name === data.name) {
+                    //         //maybe need to check if there is a duplicate score?
+                    //         // console.log('after pushing to user array before', user.scoreArray)
+                    //         user.scoreArray.push(...data.scoreArray)
+                    //         sortArrDescending(user.scoreArray)
+                    //         // console.log('after pushing to user array after and sorting', user.scoreArray)
+                    //         return user
+                    //     } else return user
+                    // })
+
+                    // return usersArrUpdateWithParsedScores
+                    return usersArrWithNewScores
 
                 } else if(!userAlreadyExists(data.name, usersArr)) {
                     // console.log('user dont exists')

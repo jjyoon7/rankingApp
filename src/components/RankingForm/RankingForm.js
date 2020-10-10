@@ -12,7 +12,7 @@ export default function RankingForm() {
         e.preventDefault()
 
         if(userAlreadyExists(userName, usersArr)) {
-            updateUserScoreArray(userName, userScore)
+            updateUserScoreArray(userName, userScore, 'number')
 
         } else if(!userAlreadyExists(userName, usersArr)) {
             addNewUser(userName, userScore)   
