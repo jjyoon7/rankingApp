@@ -17,8 +17,8 @@ function ContextProvider(props) {
     const hasScores = scores.length > 0
     const hasParsedFromSheetSucceeded = parsedDataArr.length > 0
 
-    const userAlreadyExists = (userName) => usersArr.some(user => {
-        return user.name.toLowerCase() === userName.toLowerCase()
+    const userAlreadyExists = (userName, arrayToCompare) => arrayToCompare.some(element => {
+        return element.name.toLowerCase() === userName.toLowerCase()
     })
 
     //sort array
@@ -110,36 +110,12 @@ function ContextProvider(props) {
     //if user sheet data been saved to arr 
     useEffect(() => {
         if(hasParsedFromSheetSucceeded) {
-            // const parsedDataNamesArr = parsedDataArr.map(data => data.name)
-            
-            // const nameReduced = parsedDataNamesArr.reduce((acc, cur) => {
-            //     // console.log('acc',acc)
-            //     const nameAlreadyExists = acc.includes(cur)
-            //     console.log('nameAlreadyExists', nameAlreadyExists)
-            //     if (nameAlreadyExists) {
-            //         return acc
-            //     } else if (!nameAlreadyExists) {
-            //         acc.push(cur)
-            //         return acc
-            //     }
-            // }, [])
-
             //1. reduce the parsed data, if the name exists, add the score to that name
             //other wise create a new user object and save that to the base array
-            const dataReduced = parsedDataArr.reduce((acc, cur) => {
-
-                const nameAlreadyExists = (userName) => acc.some(data => {
-                    console.log('data', data.name)
-                    return data.name.toLowerCase() === userName.toLowerCase()
-                })
-                
-                if (nameAlreadyExists(cur.name)) {
-                    // console.log('name exists')
-
-                    //userObject.score is single score
-                    //at one point, need to create an empty array and store it there
+            const reducedParsedDataArr = parsedDataArr.reduce((acc, cur) => {                
+                if (userAlreadyExists(cur.name, acc)) {
                     const updatedArrayWithNewScore = acc.map(userObject => {
-                        console.log('userObject', userObject)
+                        // console.log('userObject', userObject)
                         if(userObject.name === cur.name) {
                             userObject.scoreArray.push(cur.score)
                             sortArrDescending(userObject.scoreArray)
@@ -147,22 +123,23 @@ function ContextProvider(props) {
                         } else return userObject
                     })
 
-                    console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
+                    // console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
                     return updatedArrayWithNewScore
 
-                } else if (!nameAlreadyExists(cur.name)) {
-                    // console.log('///name does not exists')
+                } else if (!userAlreadyExists(cur.name, acc)) {
+                    //userObject.score is single score
+                    //at one point, need to create an empty array and store it there
                     cur.scoreArray = []
                     cur.scoreArray.push(cur.score)
                     delete cur.score
-                    console.log('cur when user does not exists', cur)
+                    // console.log('cur when user does not exists', cur)
                     // cur.pop(cur.score)
                     acc.push(cur)
                     return acc
                 }
             }, [])
 
-            console.log('dataReduced', dataReduced)
+            console.log('reducedParsedDataArr', reducedParsedDataArr)
 
             // const nameAlreadyExists = usersArr.includes(nameReduced)
 
