@@ -68,6 +68,7 @@ function ContextProvider(props) {
     }
 
     const addNewUser = (userName, userScore) => {
+
         const clonedUsersArr = [...usersArr]
 
         const newUserObj = {
@@ -77,10 +78,10 @@ function ContextProvider(props) {
         }
 
         clonedUsersArr.push(newUserObj)
-        
-        const orderedArray = sortArrDescending(clonedUsersArr)
-        setUsersArr(orderedArray)
-   
+
+        const newlyAddedUsers = sortArrDescending(clonedUsersArr)
+        setUsersArr(newlyAddedUsers)
+        // return user
     }
 
     //when app is first initially loaded
@@ -110,6 +111,7 @@ function ContextProvider(props) {
     useEffect(() => {
         if(hasParsedFromSheetSucceeded) {
             const parsedDataNamesArr = parsedDataArr.map(data => data.name)
+            
             const nameReduced = parsedDataNamesArr.reduce((acc, cur) => {
                 // console.log('acc',acc)
                 const nameAlreadyExists = acc.includes(cur)
@@ -122,24 +124,46 @@ function ContextProvider(props) {
                 }
             }, [])
 
+            //1. reduce the parsed data, if the name exists, add the score to that name
+            //other wise create a new user object and save that to the base array
+            const dataReduced = parsedDataArr.reduce((acc, cur) => {
+                // console.log('acc',acc)
+                const nameAlreadyExists = acc.includes(cur.name)
+                console.log('nameAlreadyExists', nameAlreadyExists)
+                if (nameAlreadyExists) {
+                    return acc
+                } else if (!nameAlreadyExists) {
+                    acc.push(cur)
+                    return acc
+                }
+            }, [])
+
             const nameAlreadyExists = usersArr.includes(nameReduced)
 
-            // const updatedUserArrWithParsedData = parsedDataArr.map(data => {
-            //     // console.log('user from parsedDataArr', user)
-            //     if(userAlreadyExists(data.name)) {
-            //         // console.log('user exists')
-            //         updateUserScoreArray(data.name, data.score)
-            //         // return data
-            //     } else if(!userAlreadyExists(data.name)) {
-            //         // console.log('user dont exists')
-            //         addNewUser(data.name, data.score)
-            //         //maybe need use .reduce() here to narrow down the duplicate user name objects?
-            //         // console.log('result', result)
-            //         // return data
-            //     }
-            //     // return data
-            // })
-            // console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
+            //2. after parsed data is reduced,
+            //compare that reducedParsedArry with usersArr
+            //if the name exists, add the parsedArr's socres to user's scoreArray
+            //otherwise add as new user object with its scores.
+            
+            //loop over each data
+            //and either add to existing user's scoreArray
+            //or create a new user object.
+            //but this will have an issue
+            const updatedUserArrWithParsedData = parsedDataArr.map(data => {
+                // console.log('user from parsedDataArr', user)
+                if(userAlreadyExists(data.name)) {
+                    // console.log('user exists')
+                    updateUserScoreArray(data.name, data.score)
+                    // return data
+                } else if(!userAlreadyExists(data.name)) {
+                    // console.log('user dont exists')
+                    addNewUser(data.name, data.score)
+                    // return data
+                }
+                //what to return here?
+                //return usersArr
+            })
+            console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
             // setUsersArr(updateData)
         } else {
             //show parse error
