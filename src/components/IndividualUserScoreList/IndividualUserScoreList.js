@@ -3,13 +3,13 @@ import { Context } from '../../Context'
 
 // import useModal from '../../customHooks/useModal/useModal'
 
-export default function UserScoreList() {
+export default function IndividualUserScoreList() {
     const { usersArr, userScoreArr } = useContext(Context)
-    const [ userScoreList, setUserScoreList ] = useState(null)
+    const [ IndividualUserScoreList, setIndividualUserScoreList ] = useState(null)
 
-    // const userScoreListModal = useModal(isModalOpen, userScoreList)
+    // const IndividualUserScoreListModal = useModal(isModalOpen, IndividualUserScoreList)
 
-    const onClickUserScoreList = () => {
+    const onClickIndividualUserScoreList = () => {
 
     }
 
@@ -21,14 +21,14 @@ export default function UserScoreList() {
                   </li>
         })
         
-        setUserScoreList(mappedScoreList)
+        setIndividualUserScoreList(mappedScoreList)
         // console.log('mappedScoreList', mappedScoreList)
     }, [ userScoreArr, usersArr ])
 
     return (
-        <div className='user-score-list-div' onClick={onClickUserScoreList}>
+        <div className='user-score-list-div' onClick={onClickIndividualUserScoreList}>
             <ul className='user-score-list-ul'>
-                {userScoreList}
+                {IndividualUserScoreList}
             </ul>
         </div>
     )

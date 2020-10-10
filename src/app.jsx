@@ -5,8 +5,8 @@ import ExcelDropzone from './excel-dropzone.jsx'
 import { Context } from './Context'
 
 import RankingList from './components/RankingList/RankingList'
-import UserScoreList from './components/UserScoreList/UserScoreList'
-import UserInputForm from './components/UserInputForm/UserInputForm'
+import IndividualUserScoreList from './components/IndividualUserScoreList/IndividualUserScoreList'
+import RankingForm from './components/RankingForm/RankingForm'
 
 export default function Main() {
   const { setParsedDataArr } = useContext(Context)
@@ -27,15 +27,15 @@ export default function Main() {
             label="Drop your file here"
           />
         </MTColumn>
-        <MTColumn width={ 75 } offset={ 5 }>
+        <MTColumn width={ 35 } offset={ 5 }>
           <RankingList/>
         </MTColumn>
         <MTColumn>
-          <UserInputForm/>
+          <RankingForm/>
         </MTColumn>
       </MTRow>
       <MTRow>
-        <UserScoreList/>
+        <IndividualUserScoreList/>
       </MTRow>
     </div>
   )

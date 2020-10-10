@@ -6,7 +6,7 @@ import './useModal.css'
 
 const modalRoot = document.getElementById("modal-root")
 
-export default function Modal(isOpen, userScorelist) {
+export default function Modal(isOpen, IndividualUserScoreList) {
   const { toggleModal } = useContext(Context)
   const [ mappedScoreList, setMappedScoreList ] = useState(null)
   const el = document.createElement("div")
@@ -26,8 +26,8 @@ export default function Modal(isOpen, userScorelist) {
   }
 
   useEffect(() => {
-    if(userScorelist.length > 0) {
-      const userScores = userScorelist.map(score => {
+    if(IndividualUserScoreList.length > 0) {
+      const userScores = IndividualUserScoreList.map(score => {
         return <h2>{score}</h2>
       })
   

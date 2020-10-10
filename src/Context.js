@@ -15,6 +15,7 @@ function ContextProvider(props) {
 
     const hasUsers = users.length > 0
     const hasScores = scores.length > 0
+    const hasParsedFromSheetSucceeded = parsedDataArr.length > 0
 
     const userAlreadyExists = (userName) => usersArr.some(user => {
         return user.name.toLowerCase() === userName.toLowerCase()
@@ -109,23 +110,70 @@ function ContextProvider(props) {
 
     //if user sheet data been saved to arr 
     useEffect(() => {
-        const updatedUserArrWithParsedData = parsedDataArr.map(data => {
-            // console.log('user from parsedDataArr', user)
-            if(userAlreadyExists(data.name)) {
-                // console.log('user exists')
-                updateUserScoreArray(data.name, data.score)
-                // return data
-            } else if(!userAlreadyExists(data.name)) {
-                // console.log('user dont exists')
-                addNewUser(data.name, data.score)
-                //maybe need use .reduce() here to narrow down the duplicate user name objects?
-                // console.log('result', result)
-                // return data
-            }
-            // return data
-        })
-        console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
-        // setUsersArr(updateData)
+        if(hasParsedFromSheetSucceeded) {
+            const parsedDataNamesArr = parsedDataArr.map(data => data.name)
+            const nameReduced = parsedDataNamesArr.reduce((acc, cur) => {
+                // console.log('acc',acc)
+                const nameAlreadyExists = acc.includes(cur)
+                console.log('nameAlreadyExists', nameAlreadyExists)
+                if (nameAlreadyExists) {
+                    return acc
+                } else if (!nameAlreadyExists) {
+                    acc.push(cur)
+                    return acc
+                }
+            }, [])
+
+            console.log('nameReduced', nameReduced)
+
+            // const userDataReduced = parsedDataArr.reduce((acc, cur) => {
+            //     // console.log('acc',acc)
+            //     const parsedDataNamesArr = parsedDataArr.map(data => data.name)
+            //     const nameAlreadyExists = parsedDataNamesArr.includes(cur.name)
+            //     console.log('nameAlreadyExists', nameAlreadyExists)
+            //     // console.log('cur',cur)
+            //     // cur.scoreArray = []
+            //     if (nameAlreadyExists) {
+                    
+            //         cur.scoreArray.push(cur.score)
+            //         // acc.push(cur)
+            //         return acc
+            //     } else if (!nameAlreadyExists) {
+            //         acc.push(cur)
+            //         return acc
+            //     }
+            // }, [])
+            
+            // console.log(parsedDataNamesArr)
+            
+            // console.log('userDataReduced', userDataReduced)
+
+            //per each reduced name,
+            // const userWithParsedData = nameReduced.map(name => {
+            //     if(name === usersArr.name) {
+            //         updateUserScoreArray(name)
+            //     }
+            // })
+            // const updatedUserArrWithParsedData = parsedDataArr.map(data => {
+            //     // console.log('user from parsedDataArr', user)
+            //     if(userAlreadyExists(data.name)) {
+            //         // console.log('user exists')
+            //         updateUserScoreArray(data.name, data.score)
+            //         // return data
+            //     } else if(!userAlreadyExists(data.name)) {
+            //         // console.log('user dont exists')
+            //         addNewUser(data.name, data.score)
+            //         //maybe need use .reduce() here to narrow down the duplicate user name objects?
+            //         // console.log('result', result)
+            //         // return data
+            //     }
+            //     // return data
+            // })
+            // console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
+            // setUsersArr(updateData)
+        } else {
+            //show parse error
+        }
     }, [ parsedDataArr ])
 
 
