@@ -33,6 +33,9 @@ function ContextProvider(props) {
     })
 
     //add score to the user
+    //maybe this could be done same as how parsedData array is sorted.
+    //1. sort the scoreArray and reduce to 3 objects with scoreArray
+    //2. then add those array to matching user
     const addInitialScoresToInitialUsers = (scoreArray, usersArray) => {
         const userWithScoreArray = usersArray.map(user => {
             user.scoreArray = []
