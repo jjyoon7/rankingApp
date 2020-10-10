@@ -23,31 +23,23 @@ function ContextProvider(props) {
 
     //sort array
     const sortArrDescending = array => array.sort((prevValue, currentValue) => {
-        // console.log('prev', prevValue)
-        // console.log('currentValue', currentValue)
-
         //if the array which contains user objecst,
         //needs to be sorted, based on user's highest score
         if(prevValue.scoreArray !== undefined) {
             return currentValue.scoreArray[0] - prevValue.scoreArray[0]
         }
+        //if it is comparing between scores in the user's scoreArray
         return currentValue - prevValue
     })
 
     //add score to the user
-    const addScoreArrayToUsersArray = (scoreArray, usersArray) => {
+    const addInitialScoresToInitialUsers = (scoreArray, usersArray) => {
         const userWithScoreArray = usersArray.map(user => {
             user.scoreArray = []
 
-            const scoreArrayKey = Object.keys(scoreArray[0])[0]
-            
-            // console.log('Object.keys(scoreArray[0])', Object.keys(scoreArray[0])[0])
-            // if(scoreArray)
-            if(scoreArrayKey === 'userId') {
-                for (var i = 0; i < scoreArray.length; i++) {
-                    if(scoreArray[i].userId === user._id) {
-                        user.scoreArray.push(scoreArray[i].score)
-                    }
+            for (var i = 0; i < scoreArray.length; i++) {
+                if(scoreArray[i].userId === user._id) {
+                    user.scoreArray.push(scoreArray[i].score)
                 }
             }
             //sort the scores in score array of user 
@@ -95,8 +87,14 @@ function ContextProvider(props) {
     //save users and scores in state
     useEffect(() => {
         if(hasUsers && hasScores) {
-            const userWithScores = addScoreArrayToUsersArray(scores, users)
-            const sortedUsers = sortArrDescending(userWithScores)
+            //prepare the scores and users before setting the usersArray
+            const initialUsersArr = users
+            const initialScoresArr = scores
+
+            const usersWithScores = addInitialScoresToInitialUsers(initialScoresArr, initialUsersArr)
+            const sortedUsers = sortArrDescending(usersWithScores)
+
+            // console.log('sortedUsers', sortedUsers)
             setUsersArr(sortedUsers)
         } else {
             //show error
@@ -124,36 +122,8 @@ function ContextProvider(props) {
                 }
             }, [])
 
-            console.log('nameReduced', nameReduced)
+            const nameAlreadyExists = usersArr.includes(nameReduced)
 
-            // const userDataReduced = parsedDataArr.reduce((acc, cur) => {
-            //     // console.log('acc',acc)
-            //     const parsedDataNamesArr = parsedDataArr.map(data => data.name)
-            //     const nameAlreadyExists = parsedDataNamesArr.includes(cur.name)
-            //     console.log('nameAlreadyExists', nameAlreadyExists)
-            //     // console.log('cur',cur)
-            //     // cur.scoreArray = []
-            //     if (nameAlreadyExists) {
-                    
-            //         cur.scoreArray.push(cur.score)
-            //         // acc.push(cur)
-            //         return acc
-            //     } else if (!nameAlreadyExists) {
-            //         acc.push(cur)
-            //         return acc
-            //     }
-            // }, [])
-            
-            // console.log(parsedDataNamesArr)
-            
-            // console.log('userDataReduced', userDataReduced)
-
-            //per each reduced name,
-            // const userWithParsedData = nameReduced.map(name => {
-            //     if(name === usersArr.name) {
-            //         updateUserScoreArray(name)
-            //     }
-            // })
             // const updatedUserArrWithParsedData = parsedDataArr.map(data => {
             //     // console.log('user from parsedDataArr', user)
             //     if(userAlreadyExists(data.name)) {
