@@ -110,60 +110,81 @@ function ContextProvider(props) {
     //if user sheet data been saved to arr 
     useEffect(() => {
         if(hasParsedFromSheetSucceeded) {
-            const parsedDataNamesArr = parsedDataArr.map(data => data.name)
+            // const parsedDataNamesArr = parsedDataArr.map(data => data.name)
             
-            const nameReduced = parsedDataNamesArr.reduce((acc, cur) => {
-                // console.log('acc',acc)
-                const nameAlreadyExists = acc.includes(cur)
-                console.log('nameAlreadyExists', nameAlreadyExists)
-                if (nameAlreadyExists) {
-                    return acc
-                } else if (!nameAlreadyExists) {
-                    acc.push(cur)
-                    return acc
-                }
-            }, [])
+            // const nameReduced = parsedDataNamesArr.reduce((acc, cur) => {
+            //     // console.log('acc',acc)
+            //     const nameAlreadyExists = acc.includes(cur)
+            //     console.log('nameAlreadyExists', nameAlreadyExists)
+            //     if (nameAlreadyExists) {
+            //         return acc
+            //     } else if (!nameAlreadyExists) {
+            //         acc.push(cur)
+            //         return acc
+            //     }
+            // }, [])
 
             //1. reduce the parsed data, if the name exists, add the score to that name
             //other wise create a new user object and save that to the base array
             const dataReduced = parsedDataArr.reduce((acc, cur) => {
-                // console.log('acc',acc)
-                const nameAlreadyExists = acc.includes(cur.name)
-                console.log('nameAlreadyExists', nameAlreadyExists)
-                if (nameAlreadyExists) {
+                console.log('acc', acc)
+                console.log('cur',cur.name)
+                
+                //acc is an array, with objects.
+                //if acc array alreay has an object with name value
+                //which is same as cur.name
+                //then push cur.score to that matching name's scoreArray
+
+                //if it is not matching,
+                //create a new obj
+                // const nameAlreadyExists = acc.includes(cur.name)
+                // console.log('nameAlreadyExists', nameAlreadyExists)
+
+
+                const nameAlreadyExists = (userName) => acc.some(data => {
+                    return data.name.toLowerCase() === userName.toLowerCase()
+                })
+                
+                if (nameAlreadyExists(cur.name)) {
+                    // console.log('name exists')
+                    console.log('acc.cur when name exists', acc.cur)
+                    // acc.cur.scoreArray.push(cur.score)
                     return acc
-                } else if (!nameAlreadyExists) {
+                } else if (!nameAlreadyExists(cur.name)) {
+                    console.log('///name does not exists')
                     acc.push(cur)
                     return acc
                 }
             }, [])
 
-            const nameAlreadyExists = usersArr.includes(nameReduced)
+            console.log('dataReduced', dataReduced)
+
+            // const nameAlreadyExists = usersArr.includes(nameReduced)
 
             //2. after parsed data is reduced,
             //compare that reducedParsedArry with usersArr
             //if the name exists, add the parsedArr's socres to user's scoreArray
             //otherwise add as new user object with its scores.
-            
+
             //loop over each data
             //and either add to existing user's scoreArray
             //or create a new user object.
             //but this will have an issue
-            const updatedUserArrWithParsedData = parsedDataArr.map(data => {
-                // console.log('user from parsedDataArr', user)
-                if(userAlreadyExists(data.name)) {
-                    // console.log('user exists')
-                    updateUserScoreArray(data.name, data.score)
-                    // return data
-                } else if(!userAlreadyExists(data.name)) {
-                    // console.log('user dont exists')
-                    addNewUser(data.name, data.score)
-                    // return data
-                }
-                //what to return here?
-                //return usersArr
-            })
-            console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
+            // const updatedUserArrWithParsedData = parsedDataArr.map(data => {
+            //     // console.log('user from parsedDataArr', user)
+            //     if(userAlreadyExists(data.name)) {
+            //         // console.log('user exists')
+            //         updateUserScoreArray(data.name, data.score)
+            //         // return data
+            //     } else if(!userAlreadyExists(data.name)) {
+            //         // console.log('user dont exists')
+            //         addNewUser(data.name, data.score)
+            //         // return data
+            //     }
+            //     //what to return here?
+            //     //return usersArr
+            // })
+            // console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
             // setUsersArr(updateData)
         } else {
             //show parse error
