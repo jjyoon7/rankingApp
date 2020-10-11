@@ -183,70 +183,90 @@ function ContextProvider(props) {
             //if the name exists, add the parsedArr's socres to user's scoreArray
             //otherwise add as new user object with its scores.
 
-            const updatedUserArrWithParsedScores = usersArr.map(user => {
+            // const updatedUserArrWithParsedScores = usersArr.map(user => {
 
-                const doesUserAlreadyExits = objectKeyAlreadyExists(user.name, reducedParsedDataArr, 'name')  
-                // console.log('usersArr in parsed data',usersArr)
-                console.log('doesUserAlreadyExits', doesUserAlreadyExits)
-                if(doesUserAlreadyExits) {
-                    const parsedDataWithMatchingName = reducedParsedDataArr.find(({name}) => name === user.name)
-
-                    user.scoreArray.push(...parsedDataWithMatchingName.scoreArray)
-                    sortArrDescending(user.scoreArray)
-
-                    return user
-
-                } else if(!doesUserAlreadyExits) {
-                    const newUsers = reducedParsedDataArr.filter(data => {
-                        if(data.name !== user.name) {
-                            const id = generateRandomId()
-                       
-                            const newUserObj = {
-                                _id: id,
-                                name: data.name,
-                                scoreArray: [...data.scoreArray]
-                            }
-                            return newUserObj
-                        } else return
-                    })
-                    console.log('newUsers',newUsers)
-                    const returnData = [user, newUsers]
-                    return returnData
-                    // return user
-
-                }
-            })
-
-            // const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
-
-            //     const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
+            //     const doesUserAlreadyExits = objectKeyAlreadyExists(user.name, reducedParsedDataArr, 'name')  
             //     // console.log('usersArr in parsed data',usersArr)
             //     console.log('doesUserAlreadyExits', doesUserAlreadyExits)
             //     if(doesUserAlreadyExits) {
-            //         const userWithMatchingName = usersArr.find(({name}) => name === data.name)
+            //         const parsedDataWithMatchingName = reducedParsedDataArr.find(({name}) => name === user.name)
 
-            //         userWithMatchingName.scoreArray.push(...data.scoreArray)
-            //         sortArrDescending(userWithMatchingName.scoreArray)
+            //         user.scoreArray.push(...parsedDataWithMatchingName.scoreArray)
+            //         sortArrDescending(user.scoreArray)
 
-            //         return userWithMatchingName
+            //         return user
 
             //     } else if(!doesUserAlreadyExits) {
-            //         //create new user id
-            //         //and add its name and score and return that new user
-  
-            //         //generate the random id number
-            //         const id = generateRandomId()
+            //         const newUsers = reducedParsedDataArr.filter(data => {
+            //             if(data.name !== user.name) {
+            //                 const id = generateRandomId()
                        
-            //         const newUserObj = {
-            //             _id: id,
-            //             name: data.name,
-            //             scoreArray: [...data.scoreArray]
-            //         }
-            //         return newUserObj
+            //                 const newUserObj = {
+            //                     _id: id,
+            //                     name: data.name,
+            //                     scoreArray: [...data.scoreArray]
+            //                 }
+            //                 return newUserObj
+            //             } else return
+            //         })
+            //         console.log('newUsers',newUsers)
+            //         const returnData = [user, newUsers]
+            //         return returnData
+            //         // return user
 
             //     }
             // })
-            console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
+
+            //iterate over 
+
+            const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
+
+                const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
+                // console.log('usersArr in parsed data',usersArr)
+                console.log('doesUserAlreadyExits', doesUserAlreadyExits)
+                if(doesUserAlreadyExits) {
+                    const userWithMatchingName = usersArr.find(({name}) => name === data.name)
+
+                    userWithMatchingName.scoreArray.push(...data.scoreArray)
+
+                    //here reduce the user's scoreArray
+                    //in case there is a duplicated score
+                    
+                    sortArrDescending(userWithMatchingName.scoreArray)
+
+                    return userWithMatchingName
+
+                } else if(!doesUserAlreadyExits) {
+                    //create new user id
+                    //and add its name and score and return that new user
+  
+                    //generate the random id number
+                    const id = generateRandomId()
+                       
+                    const newUserObj = {
+                        _id: id,
+                        name: data.name,
+                        scoreArray: [...data.scoreArray]
+                    }                    
+                    return newUserObj
+                }
+            })
+            //create a new user obj
+            //and also return the user object that does not match with parsedData's name key
+            let userObjNotMatchedWithParsedDataName
+            const userObjNotMatchingWithParsedDatasKey = reducedParsedDataArr.filter(data => {
+                const userObjWihtNotMatchingName = usersArr.find(({name}) => name !== data.name)
+                // console.log('userObjWihtNotMatchingName', userObjWihtNotMatchingName)
+                return userObjNotMatchedWithParsedDataName = userObjWihtNotMatchingName 
+            })
+
+            // console.log('userObjNotMatchingWithParsedDatasKey', userObjNotMatchingWithParsedDatasKey)
+
+            //add user object to the updated usersArry with parsed data
+            updatedUserArrWithParsedScores.push(userObjNotMatchedWithParsedDataName)
+
+            // console.log('userObjNotMatchingWithParsedDatasKey ', updatedUserArrWithParsedScores)
+            // console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
             const orderedUsersArrWithParsedScores = sortArrDescending(updatedUserArrWithParsedScores)
             setUsersArr(orderedUsersArrWithParsedScores)
         } else {
