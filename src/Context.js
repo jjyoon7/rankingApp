@@ -36,6 +36,19 @@ function ContextProvider(props) {
         return currentValue - prevValue
     })
 
+    const generateRandomId = () => {
+        const value = new Uint32Array(10)
+        const idsArray = window.crypto.getRandomValues(value)
+        const generateRandomArrayIndex = (min, max) => {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+        const randomArrayIndex = generateRandomArrayIndex(0, 10)
+        const randomId = idsArray[randomArrayIndex]
+        return randomId
+    }
+
 
     const updateUserScoreArray = (name, score, scoreType) => {        
         const updatedUsersArr = usersArr.map(user => {
@@ -70,7 +83,7 @@ function ContextProvider(props) {
 
         const newlyAddedUsers = sortArrDescending(clonedUsersArr)
         setUsersArr(newlyAddedUsers)
-        // return user
+        return usersArr
     }
 
     //when app is first initially loaded
@@ -110,7 +123,7 @@ function ContextProvider(props) {
 
                 //check if user with given id exists in reducedScoresArr
                 const doesUserIdExists = objectKeyAlreadyExists(userObj._id, reducedScoresArr, 'userId')
-
+      
                 if(doesUserIdExists) {
                     //if there is a matching id,
                     //create an scoreArray and store the scores 
@@ -195,16 +208,7 @@ function ContextProvider(props) {
                     //and add its name and score and return that new user
   
                     //generate the random id number
-                    const value = new Uint32Array(10)
-                    const idsArray = window.crypto.getRandomValues(value)
-                    const generateRandomArrayIndex = (min, max) => {
-                        min = Math.ceil(min);
-                        max = Math.floor(max);
-                        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-                    }
-                    const randomArrayIndex = generateRandomArrayIndex(0, 10)
-
-                    const id = idsArray[randomArrayIndex]
+                    const id = generateRandomId()
                        
                     const newUserObj = {
                         _id: id,

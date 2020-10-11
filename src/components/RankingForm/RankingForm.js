@@ -4,7 +4,7 @@ import { Context } from '../../Context'
 export default function RankingForm() {
     const { usersArr, updateUserScoreArray, addNewUser, objectKeyAlreadyExists } = useContext(Context)
     const [ userName, setUserName ] = useState('')
-    const [ userScore, setUserScore ] = useState(0)
+    const [ userScore, setUserScore ] = useState('')
 
     //enter a name and a score. If the user name does not already exist, that name should be added to the list of users. If the user does exist, 
     //the score should be added to them and the ranking list updated if needed.
@@ -21,6 +21,8 @@ export default function RankingForm() {
             addNewUser(userName, userScore)   
         }
 
+        setUserName('')
+        setUserScore ('')
     }
 
     const onChangeName = (e) => setUserName(e.target.value)
@@ -37,7 +39,7 @@ export default function RankingForm() {
                 <input id='name' type='text' value={userName} onChange={onChangeName}/>
 
                 <label htmlFor='score'>Score</label>
-                <input id='score' type='text' onChange={onChangeScore}/>
+                <input id='score' type='text' value={userScore} onChange={onChangeScore}/>
                 
                 <input type="submit" value="Add"/>
             </form>
