@@ -21,9 +21,12 @@ function ContextProvider(props) {
         return element.name.toLowerCase() === userName.toLowerCase()
     })
 
+    //check if given keyInput already exists in arrayToCompare. 
+    //'compareValueType' is added, so it could be used for both
+    //comparing using 'name' and 'userId'
     const objectKeyAlreadyExists = (keyInput, arrayToCompare, compareValueType) => arrayToCompare.some(element => {
-        console.log('compareValueType',compareValueType)
-        console.log('keyInput',keyInput)
+        // console.log('compareValueType',compareValueType)
+        // console.log('keyInput',keyInput)
         // console.log()
         if(compareValueType === 'name') return element.name.toLowerCase() === keyInput.toLowerCase()
         else if(compareValueType === 'userId') return element.userId === keyInput
@@ -210,21 +213,26 @@ function ContextProvider(props) {
         if(hasParsedFromSheetSucceeded) {
             //1. reduce the parsed data, if the name exists, add the score to that name
             //other wise create a new user object and save that to the base array
-            const reducedParsedDataArr = parsedDataArr.reduce((acc, cur) => {                
-                if (userAlreadyExists(cur.name, acc)) {
-                    const updatedArrayWithNewScore = acc.map(userObject => {
+            const reducedParsedDataArr = parsedDataArr.reduce((acc, cur) => {  
+
+                const doesUserAlreadyExits = objectKeyAlreadyExists(cur.name, acc, 'name')   
+                // console.log('doesUserAlreadyExits', doesUserAlreadyExits)
+                
+                if (doesUserAlreadyExits) {
+                    
+                    const updatedArrayWithNewScore = acc.map(scoreObject => {
                         // console.log('userObject', userObject)
-                        if(userObject.name === cur.name) {
-                            userObject.scoreArray.push(cur.score)
-                            sortArrDescending(userObject.scoreArray)
-                            return userObject
-                        } else return userObject
+                        if(scoreObject.name === cur.name) {
+                            scoreObject.scoreArray.push(cur.score)
+                            sortArrDescending(scoreObject.scoreArray)
+                            return scoreObject
+                        } else return scoreObject
                     })
 
                     // console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
                     return updatedArrayWithNewScore
 
-                } else if (!userAlreadyExists(cur.name, acc)) {
+                } else if (!doesUserAlreadyExits) {
                     //userObject.score is single score
                     //at one point, need to create an empty array and store it there
                     cur.scoreArray = []
@@ -244,27 +252,22 @@ function ContextProvider(props) {
             //if the name exists, add the parsedArr's socres to user's scoreArray
             //otherwise add as new user object with its scores.
 
-            const updatedUserArrWithParsedData = reducedParsedDataArr.map(data => {
-                // console.log('data from parsedDataArr', data)
-                if(userAlreadyExists(data.name, usersArr)) {
+            const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
+                console.log('data from parsedDataArr', data)
 
-                    const usersArrWithNewScores = updateUserScoreArray(data.name, data.scoreArray, 'array')
-                    // const usersArrUpdateWithParsedScores = usersArr.map(user => {
-                    //     //this is similar to 'updateUserScoreArray', maybe update 'updateUserScoreArray' so it could be used here as well
-                    //     if(user.name === data.name) {
-                    //         //maybe need to check if there is a duplicate score?
-                    //         // console.log('after pushing to user array before', user.scoreArray)
-                    //         user.scoreArray.push(...data.scoreArray)
-                    //         sortArrDescending(user.scoreArray)
-                    //         // console.log('after pushing to user array after and sorting', user.scoreArray)
-                    //         return user
-                    //     } else return user
-                    // })
+                const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
+                // console.log('doesUserAlreadyExits', doesUserAlreadyExits)
+                
+                if(doesUserAlreadyExits) {
+                    const userWithMatchingName = usersArr.find(({name}) => name === data.name)
+                    console.log('userWithMatchingName', userWithMatchingName)
+                 
+                    userWithMatchingName.scoreArray.push(...data.scoreArray)
+                    sortArrDescending(userWithMatchingName.scoreArray)
+                    return userWithMatchingName
 
-                    // return usersArrUpdateWithParsedScores
-                    return usersArrWithNewScores
-
-                } else if(!userAlreadyExists(data.name, usersArr)) {
+                } else if(!doesUserAlreadyExits) {
+                    // console.log('data from reduced data',data)
                     // console.log('user dont exists')
                     addNewUser(data.name, data.score)
                     return data
@@ -272,8 +275,43 @@ function ContextProvider(props) {
                 //what to return here?
                 //return usersArr
             })
+
+            console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
+
+
+            // const updatedUserArrWithParsedData = reducedParsedDataArr.map(data => {
+            //     console.log('data from parsedDataArr', data)
+
+            //     if(userAlreadyExists(data.name, usersArr)) {
+
+
+            //         const usersArrWithNewScores = updateUserScoreArray(data.name, data.scoreArray, 'array')
+            //         // const usersArrUpdateWithParsedScores = usersArr.map(user => {
+            //         //     //this is similar to 'updateUserScoreArray', maybe update 'updateUserScoreArray' so it could be used here as well
+            //         //     if(user.name === data.name) {
+            //         //         //maybe need to check if there is a duplicate score?
+            //         //         // console.log('after pushing to user array before', user.scoreArray)
+            //         //         user.scoreArray.push(...data.scoreArray)
+            //         //         sortArrDescending(user.scoreArray)
+            //         //         // console.log('after pushing to user array after and sorting', user.scoreArray)
+            //         //         return user
+            //         //     } else return user
+            //         // })
+
+            //         // return usersArrUpdateWithParsedScores
+            //         return usersArrWithNewScores
+
+            //     } else if(!userAlreadyExists(data.name, usersArr)) {
+            //         // console.log('user dont exists')
+            //         addNewUser(data.name, data.score)
+            //         return data
+            //     }
+            //     //what to return here?
+            //     //return usersArr
+            // })
+            
             // const orderedUsersArr = sortArrDescending(updatedUserArrWithParsedData)
-            console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
+            // console.log('updatedUserArrWithParsedData', updatedUserArrWithParsedData)
             // setUsersArr(orderedUsersArr)
         } else {
             //show parse error
