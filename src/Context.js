@@ -36,27 +36,6 @@ function ContextProvider(props) {
         return currentValue - prevValue
     })
 
-    //add score to the user
-    //maybe this could be done same as how parsedData array is sorted.
-    //1. sort the scoreArray and reduce to 3 objects with scoreArray
-    //2. then add those array to matching user
-    const addInitialScoresToInitialUsers = (scoreArray, usersArray) => {
-        const userWithScoreArray = usersArray.map(user => {
-            user.scoreArray = []
-
-            for (var i = 0; i < scoreArray.length; i++) {
-                if(scoreArray[i].userId === user._id) {
-                    user.scoreArray.push(scoreArray[i].score)
-                }
-            }
-            //sort the scores in score array of user 
-            //in descending order
-            const array = user.scoreArray
-            sortArrDescending(array)
-            return user
-        })
-        return userWithScoreArray
-    }
 
     const updateUserScoreArray = (name, score, scoreType) => {        
         const updatedUsersArr = usersArr.map(user => {
@@ -214,9 +193,21 @@ function ContextProvider(props) {
                 } else if(!doesUserAlreadyExits) {
                     //create new user id
                     //and add its name and score and return that new user
+  
+                    //generate the random id number
+                    const value = new Uint32Array(10)
+                    const idsArray = window.crypto.getRandomValues(value)
+                    const generateRandomArrayIndex = (min, max) => {
+                        min = Math.ceil(min);
+                        max = Math.floor(max);
+                        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+                    }
+                    const randomArrayIndex = generateRandomArrayIndex(0, 10)
 
+                    const id = idsArray[randomArrayIndex]
+                       
                     const newUserObj = {
-                        _id: data.__rowNum__,
+                        _id: id,
                         name: data.name,
                         scoreArray: [...data.scoreArray]
                     }
