@@ -65,22 +65,6 @@ function ContextProvider(props) {
         return userWithScoreArray
     }
 
-    // const updateUserScoreArray = (name, score) => {
-    //     const updatedUsersArr = usersArr.map(user => {
-    //         if(user.name.toLowerCase() === name.toLowerCase()) {
-    //             user.scoreArray.push(score)
-
-    //             //order the list by highest score
-    //             sortArrDescending(user.scoreArray)
-    //             return user
-    //         } else return user
-    //     })
-        
-    //     const orderedUpdatedList = sortArrDescending(updatedUsersArr)
-    //     setUsersArr(orderedUpdatedList)
-    //     // return usersArr
-    // }
-
     const updateUserScoreArray = (name, score, scoreType) => {        
         const updatedUsersArr = usersArr.map(user => {
             if(user.name.toLowerCase() === name.toLowerCase()) {
@@ -168,18 +152,13 @@ function ContextProvider(props) {
             })
 
             const orderedInitialUsers = sortArrDescending(initialScoresAddedToInitialUsers)
-            // console.log('orderedInitialUsers', orderedInitialUsers)
+
             setUsersArr(orderedInitialUsers)
 
         } else {
             //show error
         }
     }, [])
-
-    //to check if usersArr is updated with correct order
-    // useEffect(() => {
-    //     console.log('usersArr updated', usersArr)
-    // }, [ usersArr ])
 
     //if user sheet data been saved to arr 
     useEffect(() => {
