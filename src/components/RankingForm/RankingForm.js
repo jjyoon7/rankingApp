@@ -11,7 +11,6 @@ export default function RankingForm() {
     const onSubmitRankingForm = (e) => {
         e.preventDefault()
 
-        // objectKeyAlreadyExists(data.name, usersArr, 'name')
         const userAlreadyExists = objectKeyAlreadyExists(userName, usersArr, 'name')
         console.log('userAlreadyExists', userAlreadyExists)
         if(userAlreadyExists) {
@@ -27,7 +26,6 @@ export default function RankingForm() {
 
     const onChangeName = (e) => setUserName(e.target.value)
     const onChangeScore = (e) => {
-        // console.log(typeof e.target.value, 'typeof e.target.value')
         const parsedIntValue = parseInt(e.target.value)
         setUserScore(parsedIntValue)
     }
