@@ -22,8 +22,11 @@ function ContextProvider(props) {
     })
 
     const objectKeyAlreadyExists = (keyInput, arrayToCompare, compareValueType) => arrayToCompare.some(element => {
+        console.log('compareValueType',compareValueType)
+        console.log('keyInput',keyInput)
+        // console.log()
         if(compareValueType === 'name') return element.name.toLowerCase() === keyInput.toLowerCase()
-        else if(compareValueType === 'userId') return element.userId === keyInput.userId
+        else if(compareValueType === 'userId') return element.userId === keyInput
     })
 
     //sort array
@@ -120,10 +123,12 @@ function ContextProvider(props) {
             const initialUsersArr = users
             const initialScoresArr = scores
 
+            //reduce the scores, according to its userId
             const reducedScoresArr = initialScoresArr.reduce((acc, cur) => {
 
-                const hasId = acc.some(accObject => accObject.userId === cur.userId)
-                if(hasId) {
+                const doesIdAlreadyExists = objectKeyAlreadyExists(cur.userId, acc, 'userId')
+
+                if(doesIdAlreadyExists) {
                     const updatedArrayWithNewScore = acc.map(scoreObject => {
                         if(scoreObject.userId === cur.userId) {
                             scoreObject.scoreArray.push(cur.score)
@@ -131,9 +136,10 @@ function ContextProvider(props) {
                             return scoreObject
                         } else return scoreObject
                     })
+
                     return updatedArrayWithNewScore
 
-                } else if(!hasId) {
+                } else if(!doesIdAlreadyExists) {
                     cur.scoreArray = []
                     cur.scoreArray.push(cur.score)
                     delete cur.score
@@ -142,28 +148,26 @@ function ContextProvider(props) {
                 }
             }, [])
 
-            console.log('reducedScoresArr', reducedScoresArr)
+            const initialScoresAddedToInitialUsers = initialUsersArr.map(userObj => {
 
-            const initialUsersArrWithInitialScores = reducedScoresArr.map(scoreObj => {
-                console.log('scoreObj',scoreObj)
-                if(userAlreadyExists(scoreObj.userId, usersArr)) {
-                    const initialUsersWithInitialScores = initialUsersArr.map(user => {
-                        if(user._id === scoreObj.userId) {
-                            user.scoreArray.push(...scoreObj.score)
-                            sortArrDescending(user.scoreArray)
-                            return user
-                        }
-                    })
-                    return initialUsersWithInitialScores
-                } else if(!userAlreadyExists(scoreObj.userId, usersArr)) {
-                    addNewUser(scoreObj.userId, scoreObj.scoreArray)
-                    return scoreObj
-                }
+                //check if user with given id exists in reducedScoresArr
+                const doesUserIdExists = objectKeyAlreadyExists(userObj._id, reducedScoresArr, 'userId')
+
+                if(doesUserIdExists) {
+                    //if there is a matching id,
+                    //create an scoreArray and store the scores 
+                    //and return the user.
+                    const scoresArrayWithMatchingId = reducedScoresArr.find(({userId}) => userId === userObj._id)
+                    userObj.scoreArray = []
+                    userObj.scoreArray.push(...scoresArrayWithMatchingId.scoreArray)
+                    return userObj
+                } else return userObj
             })
 
-            console.log('initialUsersArrWithInitialScores', initialUsersArrWithInitialScores)
-            // console.log('sortedUsers', sortedUsers)
-            // setUsersArr(sortedUsers)
+            const orderedInitialUsers = sortArrDescending(initialScoresAddedToInitialUsers)
+            // console.log('orderedInitialUsers', orderedInitialUsers)
+            setUsersArr(orderedInitialUsers)
+
         } else {
             //show error
         }
