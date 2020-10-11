@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Context } from '../../Context'
 
 export default function RankingForm() {
-    const { usersArr, userAlreadyExists, updateUserScoreArray, addNewUser, objectKeyAlreadyExists } = useContext(Context)
+    const { usersArr, updateUserScoreArray, addNewUser, objectKeyAlreadyExists } = useContext(Context)
     const [ userName, setUserName ] = useState('')
     const [ userScore, setUserScore ] = useState(0)
 
@@ -11,11 +11,13 @@ export default function RankingForm() {
     const onSubmitRankingForm = (e) => {
         e.preventDefault()
 
-        
-        if(objectKeyAlreadyExists(userName, usersArr, 'name')) {
-            // updateUserScoreArray(userName, userScore, 'number')
+        // objectKeyAlreadyExists(data.name, usersArr, 'name')
+        const userAlreadyExists = objectKeyAlreadyExists(userName, usersArr, 'name')
+        console.log('userAlreadyExists', userAlreadyExists)
+        if(userAlreadyExists) {
+            updateUserScoreArray(userName, userScore, 'number')
 
-        } else if(!objectKeyAlreadyExists(userName, usersArr, 'name')) {
+        } else if(!userAlreadyExists) {
             addNewUser(userName, userScore)   
         }
 

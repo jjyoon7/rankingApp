@@ -17,17 +17,10 @@ function ContextProvider(props) {
     const hasScores = scores.length > 0
     const hasParsedFromSheetSucceeded = parsedDataArr.length > 0
 
-    const userAlreadyExists = (userName, arrayToCompare) => arrayToCompare.some(element => {
-        return element.name.toLowerCase() === userName.toLowerCase()
-    })
-
     //check if given keyInput already exists in arrayToCompare. 
     //'compareValueType' is added, so it could be used for both
     //comparing using 'name' and 'userId'
     const objectKeyAlreadyExists = (keyInput, arrayToCompare, compareValueType) => arrayToCompare.some(element => {
-        // console.log('compareValueType',compareValueType)
-        // console.log('keyInput',keyInput)
-        // console.log()
         if(compareValueType === 'name') return element.name.toLowerCase() === keyInput.toLowerCase()
         else if(compareValueType === 'userId') return element.userId === keyInput
     })
@@ -80,9 +73,8 @@ function ContextProvider(props) {
         })
         
         sortArrDescending(updatedUsersArr)
-        return updatedUsersArr
-        // setUsersArr(orderedUpdatedList)
-        // return usersArr
+        setUsersArr(updatedUsersArr)
+        return usersArr
     }
 
     const addNewUser = (userName, userScore) => {
@@ -211,7 +203,7 @@ function ContextProvider(props) {
                 
                 if(doesUserAlreadyExits) {
                     const userWithMatchingName = usersArr.find(({name}) => name === data.name)
-                    console.log('userWithMatchingName', userWithMatchingName)
+                    // console.log('userWithMatchingName', userWithMatchingName)
                  
                     userWithMatchingName.scoreArray.push(...data.scoreArray)
                     sortArrDescending(userWithMatchingName.scoreArray)
@@ -233,14 +225,18 @@ function ContextProvider(props) {
                 }
             })
 
-            console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
+            // console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
             const orderedUsersArrWithParsedScores = sortArrDescending(updatedUserArrWithParsedScores)
-            console.log('orderedUsersArrWithParsedScores', orderedUsersArrWithParsedScores)
-            setUsersArr(updatedUserArrWithParsedScores)
+            // console.log('orderedUsersArrWithParsedScores', orderedUsersArrWithParsedScores)
+            setUsersArr(orderedUsersArrWithParsedScores)
         } else {
             //show parse error
         }
     }, [ parsedDataArr ])
+
+    useEffect(() => {
+        console.log('usersArr updated',usersArr)
+    }, [ usersArr ])
 
 
     return (
@@ -252,8 +248,9 @@ function ContextProvider(props) {
                                     parsedDataArr,
                                     setParsedDataArr,
                                     sortArrDescending,
-                                    userAlreadyExists,
+                                    // userAlreadyExists,
                                     updateUserScoreArray,
+                                    objectKeyAlreadyExists,
                                     addNewUser,
 
         }}>
