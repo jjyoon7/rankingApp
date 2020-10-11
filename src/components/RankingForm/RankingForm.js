@@ -13,7 +13,7 @@ export default function RankingForm() {
 
         
         if(objectKeyAlreadyExists(userName, usersArr, 'name')) {
-            updateUserScoreArray(userName, userScore, 'number')
+            // updateUserScoreArray(userName, userScore, 'number')
 
         } else if(!objectKeyAlreadyExists(userName, usersArr, 'name')) {
             addNewUser(userName, userScore)   
