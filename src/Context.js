@@ -21,6 +21,11 @@ function ContextProvider(props) {
         return element.name.toLowerCase() === userName.toLowerCase()
     })
 
+    const objectKeyAlreadyExists = (keyInput, arrayToCompare, compareValueType) => arrayToCompare.some(element => {
+        if(compareValueType === 'name') return element.name.toLowerCase() === keyInput.toLowerCase()
+        else if(compareValueType === 'userId') return element.userId === keyInput.userId
+    })
+
     //sort array
     const sortArrDescending = array => array.sort((prevValue, currentValue) => {
         //if the array which contains user objecst,
@@ -115,11 +120,50 @@ function ContextProvider(props) {
             const initialUsersArr = users
             const initialScoresArr = scores
 
-            const usersWithScores = addInitialScoresToInitialUsers(initialScoresArr, initialUsersArr)
-            const sortedUsers = sortArrDescending(usersWithScores)
+            const reducedScoresArr = initialScoresArr.reduce((acc, cur) => {
 
+                const hasId = acc.some(accObject => accObject.userId === cur.userId)
+                if(hasId) {
+                    const updatedArrayWithNewScore = acc.map(scoreObject => {
+                        if(scoreObject.userId === cur.userId) {
+                            scoreObject.scoreArray.push(cur.score)
+                            sortArrDescending(scoreObject.scoreArray)
+                            return scoreObject
+                        } else return scoreObject
+                    })
+                    return updatedArrayWithNewScore
+
+                } else if(!hasId) {
+                    cur.scoreArray = []
+                    cur.scoreArray.push(cur.score)
+                    delete cur.score
+                    acc.push(cur)
+                    return acc
+                }
+            }, [])
+
+            console.log('reducedScoresArr', reducedScoresArr)
+
+            const initialUsersArrWithInitialScores = reducedScoresArr.map(scoreObj => {
+                console.log('scoreObj',scoreObj)
+                if(userAlreadyExists(scoreObj.userId, usersArr)) {
+                    const initialUsersWithInitialScores = initialUsersArr.map(user => {
+                        if(user._id === scoreObj.userId) {
+                            user.scoreArray.push(...scoreObj.score)
+                            sortArrDescending(user.scoreArray)
+                            return user
+                        }
+                    })
+                    return initialUsersWithInitialScores
+                } else if(!userAlreadyExists(scoreObj.userId, usersArr)) {
+                    addNewUser(scoreObj.userId, scoreObj.scoreArray)
+                    return scoreObj
+                }
+            })
+
+            console.log('initialUsersArrWithInitialScores', initialUsersArrWithInitialScores)
             // console.log('sortedUsers', sortedUsers)
-            setUsersArr(sortedUsers)
+            // setUsersArr(sortedUsers)
         } else {
             //show error
         }
@@ -129,6 +173,33 @@ function ContextProvider(props) {
     // useEffect(() => {
     //     console.log('usersArr updated', usersArr)
     // }, [ usersArr ])
+
+    // const reduceDuplicatedValuesInArr = (arrayInput) => arrayInput.reduce((acc, cur) => {                
+    //     if (userAlreadyExists(cur.userId, acc)) {
+    //         const updatedArrayWithNewScore = acc.map(userObject => {
+    //             // console.log('userObject', userObject)
+    //             if(userObject.na === cur.name) {
+    //                 userObject.scoreArray.push(cur.score)
+    //                 sortArrDescending(userObject.scoreArray)
+    //                 return userObject
+    //             } else return userObject
+    //         })
+
+    //         // console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
+    //         return updatedArrayWithNewScore
+
+    //     } else if (!userAlreadyExists(cur.name, acc)) {
+    //         //userObject.score is single score
+    //         //at one point, need to create an empty array and store it there
+    //         cur.scoreArray = []
+    //         cur.scoreArray.push(cur.score)
+    //         delete cur.score
+    //         // console.log('cur when user does not exists', cur)
+    //         // cur.pop(cur.score)
+    //         acc.push(cur)
+    //         return acc
+    //     }
+    // }, [])
 
     //if user sheet data been saved to arr 
     useEffect(() => {
