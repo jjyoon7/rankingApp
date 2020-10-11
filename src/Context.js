@@ -183,42 +183,6 @@ function ContextProvider(props) {
             //if the name exists, add the parsedArr's socres to user's scoreArray
             //otherwise add as new user object with its scores.
 
-            // const updatedUserArrWithParsedScores = usersArr.map(user => {
-
-            //     const doesUserAlreadyExits = objectKeyAlreadyExists(user.name, reducedParsedDataArr, 'name')  
-            //     // console.log('usersArr in parsed data',usersArr)
-            //     console.log('doesUserAlreadyExits', doesUserAlreadyExits)
-            //     if(doesUserAlreadyExits) {
-            //         const parsedDataWithMatchingName = reducedParsedDataArr.find(({name}) => name === user.name)
-
-            //         user.scoreArray.push(...parsedDataWithMatchingName.scoreArray)
-            //         sortArrDescending(user.scoreArray)
-
-            //         return user
-
-            //     } else if(!doesUserAlreadyExits) {
-            //         const newUsers = reducedParsedDataArr.filter(data => {
-            //             if(data.name !== user.name) {
-            //                 const id = generateRandomId()
-                       
-            //                 const newUserObj = {
-            //                     _id: id,
-            //                     name: data.name,
-            //                     scoreArray: [...data.scoreArray]
-            //                 }
-            //                 return newUserObj
-            //             } else return
-            //         })
-            //         console.log('newUsers',newUsers)
-            //         const returnData = [user, newUsers]
-            //         return returnData
-            //         // return user
-
-            //     }
-            // })
-
-            //iterate over 
-
             const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
 
                 const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
