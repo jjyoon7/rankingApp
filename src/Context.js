@@ -183,35 +183,70 @@ function ContextProvider(props) {
             //if the name exists, add the parsedArr's socres to user's scoreArray
             //otherwise add as new user object with its scores.
 
-            const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
+            const updatedUserArrWithParsedScores = usersArr.map(user => {
 
-                const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
-                
+                const doesUserAlreadyExits = objectKeyAlreadyExists(user.name, reducedParsedDataArr, 'name')  
+                // console.log('usersArr in parsed data',usersArr)
+                console.log('doesUserAlreadyExits', doesUserAlreadyExits)
                 if(doesUserAlreadyExits) {
-                    const userWithMatchingName = usersArr.find(({name}) => name === data.name)
+                    const parsedDataWithMatchingName = reducedParsedDataArr.find(({name}) => name === user.name)
 
-                    userWithMatchingName.scoreArray.push(...data.scoreArray)
-                    sortArrDescending(userWithMatchingName.scoreArray)
+                    user.scoreArray.push(...parsedDataWithMatchingName.scoreArray)
+                    sortArrDescending(user.scoreArray)
 
-                    return userWithMatchingName
+                    return user
 
                 } else if(!doesUserAlreadyExits) {
-                    //create new user id
-                    //and add its name and score and return that new user
-  
-                    //generate the random id number
-                    const id = generateRandomId()
+                    const newUsers = reducedParsedDataArr.filter(data => {
+                        if(data.name !== user.name) {
+                            const id = generateRandomId()
                        
-                    const newUserObj = {
-                        _id: id,
-                        name: data.name,
-                        scoreArray: [...data.scoreArray]
-                    }
-                    return newUserObj
+                            const newUserObj = {
+                                _id: id,
+                                name: data.name,
+                                scoreArray: [...data.scoreArray]
+                            }
+                            return newUserObj
+                        } else return
+                    })
+                    console.log('newUsers',newUsers)
+                    const returnData = [user, newUsers]
+                    return returnData
+                    // return user
 
                 }
             })
 
+            // const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
+
+            //     const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
+            //     // console.log('usersArr in parsed data',usersArr)
+            //     console.log('doesUserAlreadyExits', doesUserAlreadyExits)
+            //     if(doesUserAlreadyExits) {
+            //         const userWithMatchingName = usersArr.find(({name}) => name === data.name)
+
+            //         userWithMatchingName.scoreArray.push(...data.scoreArray)
+            //         sortArrDescending(userWithMatchingName.scoreArray)
+
+            //         return userWithMatchingName
+
+            //     } else if(!doesUserAlreadyExits) {
+            //         //create new user id
+            //         //and add its name and score and return that new user
+  
+            //         //generate the random id number
+            //         const id = generateRandomId()
+                       
+            //         const newUserObj = {
+            //             _id: id,
+            //             name: data.name,
+            //             scoreArray: [...data.scoreArray]
+            //         }
+            //         return newUserObj
+
+            //     }
+            // })
+            console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
             const orderedUsersArrWithParsedScores = sortArrDescending(updatedUserArrWithParsedScores)
             setUsersArr(orderedUsersArrWithParsedScores)
         } else {
@@ -235,7 +270,6 @@ function ContextProvider(props) {
                                     updateUserScoreArray,
                                     objectKeyAlreadyExists,
                                     addNewUser,
-
         }}>
             {props.children}
         </Context.Provider>
