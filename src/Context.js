@@ -215,16 +215,18 @@ function ContextProvider(props) {
                     return newUserObj
                 }
             })
-            //create a new user obj
-            //and also return the user object that does not match with parsedData's name key
+
+            //if there is a left user object that does not match with parsedData's name key
+            //add it
+             //otherwise do not run this.
             let userObjNotMatchedWithParsedDataName
-            const userObjNotMatchingWithParsedDatasKey = reducedParsedDataArr.filter(data => {
+            const userObjNotMatchingWithParsedDatasKey = reducedParsedDataArr.map(data => {
                 const userObjWihtNotMatchingName = usersArr.find(({name}) => name !== data.name)
-                // console.log('userObjWihtNotMatchingName', userObjWihtNotMatchingName)
+                console.log('userObjWihtNotMatchingName', userObjWihtNotMatchingName)
                 return userObjNotMatchedWithParsedDataName = userObjWihtNotMatchingName 
             })
 
-            // console.log('userObjNotMatchingWithParsedDatasKey', userObjNotMatchingWithParsedDatasKey)
+            console.log('userObjNotMatchingWithParsedDatasKey', userObjNotMatchingWithParsedDatasKey)
 
             //add user object to the updated usersArry with parsed data
             updatedUserArrWithParsedScores.push(userObjNotMatchedWithParsedDataName)
