@@ -152,12 +152,10 @@ function ContextProvider(props) {
             const reducedParsedDataArr = parsedDataArr.reduce((acc, cur) => {  
 
                 const doesUserAlreadyExits = objectKeyAlreadyExists(cur.name, acc, 'name')   
-                // console.log('doesUserAlreadyExits', doesUserAlreadyExits)
                 
                 if (doesUserAlreadyExits) {
                     
                     const updatedArrayWithNewScore = acc.map(scoreObject => {
-                        // console.log('userObject', userObject)
                         if(scoreObject.name === cur.name) {
                             scoreObject.scoreArray.push(cur.score)
                             sortArrDescending(scoreObject.scoreArray)
@@ -165,23 +163,20 @@ function ContextProvider(props) {
                         } else return scoreObject
                     })
 
-                    // console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
                     return updatedArrayWithNewScore
 
                 } else if (!doesUserAlreadyExits) {
-                    //userObject.score is single score
-                    //at one point, need to create an empty array and store it there
+                    //cur.score is single score
+                    //so need to create an scoreArray
+                    //and push its score inside of an array
+                    //then delete the individual score value
                     cur.scoreArray = []
                     cur.scoreArray.push(cur.score)
                     delete cur.score
-                    // console.log('cur when user does not exists', cur)
-                    // cur.pop(cur.score)
                     acc.push(cur)
                     return acc
                 }
             }, [])
-
-            // console.log('reducedParsedDataArr', reducedParsedDataArr)
 
             //2. after parsed data is reduced,
             //compare that reducedParsedArry with usersArr
@@ -191,16 +186,13 @@ function ContextProvider(props) {
             const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
 
                 const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
-                // console.log('doesUserAlreadyExits', doesUserAlreadyExits)
                 
                 if(doesUserAlreadyExits) {
                     const userWithMatchingName = usersArr.find(({name}) => name === data.name)
-                    // console.log('userWithMatchingName', userWithMatchingName)
-                 
+
                     userWithMatchingName.scoreArray.push(...data.scoreArray)
                     sortArrDescending(userWithMatchingName.scoreArray)
-                    //should update usersArr here?
-                    // setUsersArr(userWithMatchingName)
+
                     return userWithMatchingName
 
                 } else if(!doesUserAlreadyExits) {
@@ -216,13 +208,11 @@ function ContextProvider(props) {
                         scoreArray: [...data.scoreArray]
                     }
                     return newUserObj
-                    // return data
+
                 }
             })
 
-            // console.log('updatedUserArrWithParsedScores', updatedUserArrWithParsedScores)
             const orderedUsersArrWithParsedScores = sortArrDescending(updatedUserArrWithParsedScores)
-            // console.log('orderedUsersArrWithParsedScores', orderedUsersArrWithParsedScores)
             setUsersArr(orderedUsersArrWithParsedScores)
         } else {
             //show parse error
@@ -233,7 +223,6 @@ function ContextProvider(props) {
         console.log('usersArr updated',usersArr)
     }, [ usersArr ])
 
-
     return (
         <Context.Provider value={{
                                     usersArr,
@@ -243,7 +232,6 @@ function ContextProvider(props) {
                                     parsedDataArr,
                                     setParsedDataArr,
                                     sortArrDescending,
-                                    // userAlreadyExists,
                                     updateUserScoreArray,
                                     objectKeyAlreadyExists,
                                     addNewUser,

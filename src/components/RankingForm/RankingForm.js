@@ -12,7 +12,7 @@ export default function RankingForm() {
         e.preventDefault()
 
         const userAlreadyExists = objectKeyAlreadyExists(userName, usersArr, 'name')
-        console.log('userAlreadyExists', userAlreadyExists)
+
         if(userAlreadyExists) {
             updateUserScoreArray(userName, userScore, 'number')
 

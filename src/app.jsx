@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { MTRow, MTColumn } from 'mt-ui'
 import ExcelDropzone from './excel-dropzone.jsx'
 
