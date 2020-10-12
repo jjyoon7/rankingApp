@@ -50,24 +50,12 @@ function ContextProvider(props) {
         return randomId
     }
 
-    // const updateUserScoreArray = (name, score) => {    
-    //     const updatedUsersArr = usersArr.map(user => {
-    //         if(user.name.toLowerCase() === name.toLowerCase()) {
-    //             user.scoreArray.push(score)
-    //             //order the list by highest score
-    //             sortArrDescending(user.scoreArray)
-    //             return user
-    //         } else return user
-    //     })
-        
-    //     sortArrDescending(updatedUsersArr)
-    //     setUsersArr(updatedUsersArr)
-    //     return usersArr
-    // }
-
     const updateUserScoreArray = (keyValueToCompare, score, arrayToAdd, conditionToCompare) => {  
         const updatedUsersArr = arrayToAdd.map(arrayObj => {
             
+            // becuase it is .some, it will return true 
+            // objectKeyAlreadyExists(keyValueToCompare, arrayToAdd, conditionToCompare)
+
             let isItSameKey
 
             if(conditionToCompare === 'userId') {
@@ -84,18 +72,21 @@ function ContextProvider(props) {
             } else return arrayObj
         })
 
-        // sortArrDescending(updatedUsersArr)
         return updatedUsersArr
     }
 
-    const addNewUser = (userName, userScore) => {
+    const addNewUser = (userName, userScore, scoreType) => {
         const clonedUsersArr = [...usersArr]
         const id = generateRandomId()
+
+        let newlyAddedScore
+        if(scoreType === 'number') newlyAddedScore = [userScore]
+        else if(scoreType === 'array') newlyAddedScore = [...userScore]
 
         const newUserObj = {
             _id: id,
             name: userName,
-            scoreArray: [userScore]
+            scoreArray: newlyAddedScore
         }
 
         clonedUsersArr.push(newUserObj)
@@ -121,7 +112,7 @@ function ContextProvider(props) {
                     const updatedArrayWithNewScore = updateUserScoreArray(cur.userId, cur.score, acc, 'userId')
                     return updatedArrayWithNewScore
 
-                } else if(!doesIdAlreadyExists) {
+                } else {
                     cur.scoreArray = []
                     cur.scoreArray.push(cur.score)
                     delete cur.score
@@ -145,7 +136,14 @@ function ContextProvider(props) {
                     userObj.scoreArray = []
                     userObj.scoreArray.push(...scoresArrayWithMatchingId.scoreArray)
                     return userObj
-                } else return userObj
+                } else {
+                    //with current initial user data, this state will never run
+                    //but just in case if different initial user data is loaded
+                    //and has extra users that does not match with reducedScoresArr
+                    //create a new user object
+                    addNewUser(userObj.name, userObj.score, 'number')
+                    return userObj
+                }
             })
 
             const orderedInitialUsers = sortArrDescending(initialScoresAddedToInitialUsers)
@@ -161,14 +159,15 @@ function ContextProvider(props) {
         if(hasParsedFromSheetSucceeded) {
             //1. reduce the parsed data, if the name exists, add the score to that name
             //other wise create a new user object and save that to the base array
-            const reducedParsedDataArr = parsedDataArr.reduce((acc, cur) => {  
+            const reducedParsedDataArr = parsedDataArr.reduce((acc, cur) => { 
+
                 const doesUserAlreadyExits = objectKeyAlreadyExists(cur.name, acc, 'name')   
 
                 if (doesUserAlreadyExits) {
                     const updatedArrayWithNewScore = updateUserScoreArray(cur.name, cur.score, acc, 'name')
                     return updatedArrayWithNewScore
 
-                } else if (!doesUserAlreadyExits) {
+                } else {
                     //cur.score is single score
                     //so need to create an scoreArray
                     //and push its score inside of an array
@@ -180,7 +179,6 @@ function ContextProvider(props) {
                     return acc
                 }
             }, [])
-
 
             //2. after parsed data is reduced,
             //compare that reducedParsedArry with usersArr
@@ -202,7 +200,7 @@ function ContextProvider(props) {
                     sortArrDescending(userWithMatchingName.scoreArray)
                     return userWithMatchingName
 
-                } else if(!doesUserAlreadyExits) {
+                } else {
                     //create new user id
                     //and add its name and score and return that new user
   
@@ -211,6 +209,8 @@ function ContextProvider(props) {
                     //it will cause issue when user add new score or user before 
                     //the sheet is parsed
                     //then _id: 4 is taken etc.
+                    addNewUser(data.name, data.scoreArray, 'array')
+
                     const id = generateRandomId()
                        
                     const newUserObj = {
