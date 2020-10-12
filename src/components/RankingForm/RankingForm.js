@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Context } from '../../Context'
 
 export default function RankingForm() {
-    const { usersArr, setUsersArr, updateUserScoreArray, sortArrDescending, addNewUser, objectKeyAlreadyExists } = useContext(Context)
+    const { usersArr, setUsersArr, updateScoreArray, sortArrDescending, addNewUser, objectKeyAlreadyExists } = useContext(Context)
     const [ userName, setUserName ] = useState('')
     const [ userScore, setUserScore ] = useState('')
 
@@ -14,7 +14,7 @@ export default function RankingForm() {
         const userAlreadyExists = objectKeyAlreadyExists(userName, usersArr, 'name')
 
         if(userAlreadyExists) {
-            const updatedArrayWithNewScore = updateUserScoreArray(userName, userScore, usersArr, 'name')
+            const updatedArrayWithNewScore = updateScoreArray(userName, userScore, usersArr, 'name')
             sortArrDescending(updatedArrayWithNewScore)
             setUsersArr(updatedArrayWithNewScore)
 
@@ -28,8 +28,8 @@ export default function RankingForm() {
 
     const onChangeName = (e) => setUserName(e.target.value)
     const onChangeScore = (e) => {
-        const parsedIntValue = parseInt(e.target.value)
-        setUserScore(parsedIntValue)
+        //parseInt is throwing an NaN error, prevent the issue, return userScore
+        setUserScore(parseInt(e.target.value) || userScore)
     }
 
     return (
