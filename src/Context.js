@@ -67,15 +67,16 @@ function ContextProvider(props) {
 
     const updateUserScoreArray = (keyValueToCompare, score, arrayToAdd, conditionToCompare) => {  
         const updatedUsersArr = arrayToAdd.map(arrayObj => {
-            let arrayObjToCompare
-        
+            
+            let isItSameKey
+
             if(conditionToCompare === 'userId') {
-                arrayObjToCompare = arrayObj.userId
+                isItSameKey = arrayObj.userId === keyValueToCompare
             } else if(conditionToCompare === 'name') {
-                arrayObjToCompare = arrayObj.name
+                isItSameKey = arrayObj.name.toLowerCase() === keyValueToCompare.toLowerCase()
             }
 
-            if(arrayObjToCompare === keyValueToCompare) {
+            if(isItSameKey) {
                 arrayObj.scoreArray.push(score)
                 //order the list by highest score
                 sortArrDescending(arrayObj.scoreArray)
@@ -83,7 +84,7 @@ function ContextProvider(props) {
             } else return arrayObj
         })
 
-        sortArrDescending(updatedUsersArr)
+        // sortArrDescending(updatedUsersArr)
         return updatedUsersArr
     }
 
@@ -118,8 +119,6 @@ function ContextProvider(props) {
 
                 if(doesIdAlreadyExists) {
                     const updatedArrayWithNewScore = updateUserScoreArray(cur.userId, cur.score, acc, 'userId')
-                    // console.log('acc after update score array', acc)
-                    console.log('updatedArrayWithNewScore', updatedArrayWithNewScore)
                     return updatedArrayWithNewScore
 
                 } else if(!doesIdAlreadyExists) {
