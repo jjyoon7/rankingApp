@@ -19,7 +19,7 @@ export default function RankingForm() {
             setUsersArr(updatedArrayWithNewScore)
 
         } else if(!userAlreadyExists) {
-            addNewUser(userName, userScore, 'number')   
+            addNewUser(userName, userScore)   
         }
 
         setUserName('')
