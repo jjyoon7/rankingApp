@@ -53,8 +53,9 @@ function ContextProvider(props) {
     const updateUserScoreArray = (keyValueToCompare, score, arrayToAdd, conditionToCompare) => {  
         const updatedUsersArr = arrayToAdd.map(arrayObj => {
             
-            // becuase it is .some, it will return true 
-            // objectKeyAlreadyExists(keyValueToCompare, arrayToAdd, conditionToCompare)
+            // cannot use 'objectKeyAlreadyExists' because it uses .some()
+            // and in this case, 'keyValueToCompare' and 'arrayObj' needs to be exactly the same,
+            //in order to update the score to the correct user array
 
             let isItSameKey
 
@@ -93,7 +94,20 @@ function ContextProvider(props) {
 
         const newlyAddedUsers = sortArrDescending(clonedUsersArr)
         setUsersArr(newlyAddedUsers)
-        return usersArr
+        return newUserObj
+    }
+
+    const createNewScoreArrayForUserObj = (userObj, arrayToAddNewUserObj) => {
+        //userObj.score is single score
+        //so need to create an scoreArray
+        //and push its score inside of an array
+        //then delete the individual score value
+        userObj.scoreArray = []
+        userObj.scoreArray.push(userObj.score)
+
+        delete userObj.score
+        arrayToAddNewUserObj.push(userObj)
+        // return arrayToAddNewUserObj
     }
 
     //when app is first initially loaded
@@ -113,10 +127,8 @@ function ContextProvider(props) {
                     return updatedArrayWithNewScore
 
                 } else {
-                    cur.scoreArray = []
-                    cur.scoreArray.push(cur.score)
-                    delete cur.score
-                    acc.push(cur)
+                    //create new empty array and store the score
+                    createNewScoreArrayForUserObj(cur, acc)
                     return acc
                 }
             }, [])
@@ -168,14 +180,7 @@ function ContextProvider(props) {
                     return updatedArrayWithNewScore
 
                 } else {
-                    //cur.score is single score
-                    //so need to create an scoreArray
-                    //and push its score inside of an array
-                    //then delete the individual score value
-                    cur.scoreArray = []
-                    cur.scoreArray.push(cur.score)
-                    delete cur.score
-                    acc.push(cur)
+                    createNewScoreArrayForUserObj(cur, acc)
                     return acc
                 }
             }, [])
@@ -203,21 +208,7 @@ function ContextProvider(props) {
                 } else {
                     //create new user id
                     //and add its name and score and return that new user
-  
-                    //generate the random id number
-                    //cannot use __rawNum__ because
-                    //it will cause issue when user add new score or user before 
-                    //the sheet is parsed
-                    //then _id: 4 is taken etc.
-                    addNewUser(data.name, data.scoreArray, 'array')
-
-                    const id = generateRandomId()
-                       
-                    const newUserObj = {
-                        _id: id,
-                        name: data.name,
-                        scoreArray: [...data.scoreArray]
-                    }                    
+                    const newUserObj = addNewUser(data.name, data.scoreArray, 'array')                  
                     return newUserObj
                 }
                 
@@ -246,10 +237,6 @@ function ContextProvider(props) {
             //show parse error
         }
     }, [ parsedDataArr ])
-
-    // useEffect(() => {
-    //     console.log('usersArr updated',usersArr)
-    // }, [ usersArr ])
 
     return (
         <Context.Provider value={{
