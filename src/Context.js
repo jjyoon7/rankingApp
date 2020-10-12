@@ -23,6 +23,7 @@ function ContextProvider(props) {
     const objectKeyAlreadyExists = (keyInput, arrayToCompare, compareValueType) => arrayToCompare.some(element => {
         if(compareValueType === 'name') return element.name.toLowerCase() === keyInput.toLowerCase()
         else if(compareValueType === 'userId') return element.userId === keyInput
+        else if(compareValueType === 'number') return element === keyInput
     })
 
     //sort array
@@ -178,6 +179,7 @@ function ContextProvider(props) {
                 }
             }, [])
 
+
             //2. after parsed data is reduced,
             //compare that reducedParsedArry with usersArr
             //if the name exists, add the parsedArr's socres to user's scoreArray
@@ -186,16 +188,19 @@ function ContextProvider(props) {
             const updatedUserArrWithParsedScores = reducedParsedDataArr.map(data => {
 
                 const doesUserAlreadyExits = objectKeyAlreadyExists(data.name, usersArr, 'name')  
-                // console.log('usersArr in parsed data',usersArr)
-                console.log('doesUserAlreadyExits', doesUserAlreadyExits)
+
                 if(doesUserAlreadyExits) {
                     const userWithMatchingName = usersArr.find(({name}) => name === data.name)
 
-                    userWithMatchingName.scoreArray.push(...data.scoreArray)
-
-                    //here reduce the user's scoreArray
-                    //in case there is a duplicated score
+                    const reducedDuplicatedScores = data.scoreArray.filter(score => {
+                        const hasSameScore = userWithMatchingName.scoreArray.includes(score)
+                        // console.log('hasSameScore', hasSameScore)
+                        if(hasSameScore) return
+                        else if(!hasSameScore) return score
+                    })
                     
+                    userWithMatchingName.scoreArray.push(...reducedDuplicatedScores)
+
                     sortArrDescending(userWithMatchingName.scoreArray)
 
                     return userWithMatchingName
@@ -222,11 +227,11 @@ function ContextProvider(props) {
             let userObjNotMatchedWithParsedDataName
             const userObjNotMatchingWithParsedDatasKey = reducedParsedDataArr.map(data => {
                 const userObjWihtNotMatchingName = usersArr.find(({name}) => name !== data.name)
-                console.log('userObjWihtNotMatchingName', userObjWihtNotMatchingName)
+                // console.log('userObjWihtNotMatchingName', userObjWihtNotMatchingName)
                 return userObjNotMatchedWithParsedDataName = userObjWihtNotMatchingName 
             })
 
-            console.log('userObjNotMatchingWithParsedDatasKey', userObjNotMatchingWithParsedDatasKey)
+            // console.log('userObjNotMatchingWithParsedDatasKey', userObjNotMatchingWithParsedDatasKey)
 
             //add user object to the updated usersArry with parsed data
             updatedUserArrWithParsedScores.push(userObjNotMatchedWithParsedDataName)
@@ -241,7 +246,7 @@ function ContextProvider(props) {
     }, [ parsedDataArr ])
 
     useEffect(() => {
-        console.log('usersArr updated',usersArr)
+        // console.log('usersArr updated',usersArr)
     }, [ usersArr ])
 
     return (
