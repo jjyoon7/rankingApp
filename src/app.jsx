@@ -21,21 +21,23 @@ export default function Main() {
     <div className="container container--centered">
       <h1 className="m-t">Ranking app</h1>
       <MTRow>
-        <MTColumn width={ 20 }>
+        <MTColumn width={ 50 }>
           <ExcelDropzone
             onSheetDrop={handleSheetData}
             label="Drop your file here"
           />
         </MTColumn>
-        <MTColumn width={ 35 } offset={ 5 }>
-          <RankingList/>
-        </MTColumn>
-        <MTColumn>
+        <MTColumn width={ 50 } offset={ 5 }>
           <RankingForm/>
         </MTColumn>
       </MTRow>
       <MTRow>
-        <IndividualUserScoreList/>
+        <MTColumn>
+        <RankingList/>
+        </MTColumn>
+        <MTColumn>
+          <IndividualUserScoreList/>
+        </MTColumn>
       </MTRow>
     </div>
   )
