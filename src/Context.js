@@ -97,16 +97,31 @@ function ContextProvider(props) {
         return newUserObj
     }
 
-    const createNewScoreArray = (userObj, arrayToAddNewUserObj) => {
-        //userObj.score is single score
-        //so need to create an scoreArray
-        //and push the score inside of an scoreArray
-        //then delete the individual score value
-        userObj.scoreArray = []
-        userObj.scoreArray.push(userObj.score)
+    // const createNewScoreArray = (passedObj, arrayToAddNewObj) => {
+    //     //userObj.score is single score
+    //     //so need to create an scoreArray
+    //     //and push the score inside of an scoreArray
+    //     //then delete the individual score value
+    //     passedObj.scoreArray = []
+    //     passedObj.scoreArray.push(passedObj.score)
 
-        delete userObj.score
-        arrayToAddNewUserObj.push(userObj)
+    //     delete userObj.score
+    //     arrayToAddNewObj.push(passedObj)
+    // }
+    const createNewScoreArrayAndAddScore = (passedObj, scoreToAdd) => {
+        if(typeof scoreToAdd === 'number') {
+            //if 'scoreToAdd' is single score
+            //so need to create an scoreArray
+            //and push the score inside of an scoreArray
+            //then delete the individual score value
+            passedObj.scoreArray = []
+            passedObj.scoreArray.push(scoreToAdd)
+            delete passedObj.score
+        } else if(Array.isArray(scoreToAdd)) {
+            passedObj.scoreArray = []
+            passedObj.scoreArray.push(...scoreToAdd)
+        }
+        return passedObj
     }
 
     //when app initially loads
@@ -118,6 +133,7 @@ function ContextProvider(props) {
 
             //reduce the scores, according to its userId
             const reducedScoresArr = initialScoresArr.reduce((acc, cur) => {
+                console.log('cur', cur)
                 const doesIdAlreadyExists = objectKeyAlreadyExists(cur.userId, acc, 'userId')
 
                 if(doesIdAlreadyExists) {
@@ -126,8 +142,12 @@ function ContextProvider(props) {
 
                 } else {
                     //create new empty array and store the score
-                    createNewScoreArray(cur, acc)
-                    return acc
+                    const newScoreObj = createNewScoreArrayAndAddScore(cur, cur.score)
+                    // createNewScoreArray(cur)
+
+                    console.log('newScoreObj', newScoreObj)
+                    
+                    return acc.push(newScoreObj)
                 }
             }, [])
 
@@ -143,10 +163,13 @@ function ContextProvider(props) {
                     //create an scoreArray to userObj and store the scores 
                     //and return the user.
                     const scoresArrayWithMatchingId = reducedScoresArr.find(({userId}) => userId === userObj._id)
+                    
+                    const userObjWithScoresAdded = createNewScoreArrayAndAddScore(userObj, scoresArrayWithMatchingId)
                     // createNewScoreArray(userObj, arrayToAddNewUserObj)
-                    userObj.scoreArray = []
-                    userObj.scoreArray.push(...scoresArrayWithMatchingId.scoreArray)
-                    return userObj
+ 
+                    // userObj.scoreArray = []
+                    // userObj.scoreArray.push(...scoresArrayWithMatchingId.scoreArray)
+                    return userObjWithScoresAdded
                 } else {
                     //with current initial user data, this state will never run
                     //but just in case if different initial user data is loaded
@@ -179,8 +202,9 @@ function ContextProvider(props) {
                     return updatedArrayWithNewScore
 
                 } else {
-                    createNewScoreArray(cur, acc)
-                    return acc
+                    const newScoreObj = createNewScoreArrayAndAddScore(cur, cur.score)
+                    // createNewScoreArray(cur, acc)
+                    return acc.push(newScoreObj)
                 }
             }, [])
 
