@@ -1,7 +1,19 @@
 .ranking-form-div {
-
+    display: grid;
+    border: 1px solid;
+    padding: 1rem;
+    height: 200px;
+    border-radius: 2%;
 }
 
 .ranking-form {
-    
+    display: grid;
+    /* row-gap: 1rem; */
+    place-items: center start;
+    /* justify-content: space-between; */
 }
+
+.ranking-form-button {
+    min-width: 100%;
+}
+

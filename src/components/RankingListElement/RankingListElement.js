@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../../Context'
+
 import './RankingListElement.css'
 
 export default function RankingListElement({ id, name, score }) {
@@ -16,8 +17,8 @@ export default function RankingListElement({ id, name, score }) {
 
     return (
         <li className='user-li'>
-            <h2 className='user-name-h2' onClick={onClickUserName}>{name}</h2>
-            <h2>{score}</h2>
+            <h3 className='user-name-h3' onClick={onClickUserName}>{name}</h3>
+            <h3>{score}</h3>
         </li>
     )
 }

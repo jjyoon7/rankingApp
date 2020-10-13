@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Context } from '../../Context'
 
+import './IndividualUserScoreList.css'
+
 export default function IndividualUserScoreList() {
     const { usersArr, 
             userScoreArr, 
@@ -21,7 +23,7 @@ export default function IndividualUserScoreList() {
     }, [ userScoreArr, usersArr ])
 
     return (
-        <div className='user-score-list-div'>
+        <div className='user-score-list-div individual-score-list'>
             {hasUserName ? <h2>{userName}</h2> : ''}
             <ul className='user-score-list-ul'>
                 {hasIndividualSocre ? IndividualUserScoreList : 

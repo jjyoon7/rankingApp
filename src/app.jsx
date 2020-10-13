@@ -19,24 +19,30 @@ export default function Main() {
 
   return (
     <div className="container container--centered">
-      <h1 className="m-t">Ranking app</h1>
       <MTRow>
-        <MTColumn width={ 50 }>
-          <ExcelDropzone
-            onSheetDrop={handleSheetData}
-            label="Drop your file here"
-          />
-        </MTColumn>
-        <MTColumn width={ 50 } offset={ 5 }>
-          <RankingForm/>
+        <MTColumn offset={ 20 } width={ 60 }>
+          <h1 className="m-t">Ranking app</h1>
         </MTColumn>
       </MTRow>
       <MTRow>
-        <MTColumn>
-        <RankingList/>
+        <MTColumn offset={ 20 } width={ 60 }>
+          <div className="user-input-area">
+            <ExcelDropzone
+              onSheetDrop={handleSheetData}
+              label="Drop your file here"
+              className="file-drop-area"
+            />
+            <h2 className="or-text">or</h2>
+            <RankingForm/>
+          </div>
         </MTColumn>
-        <MTColumn>
-          <IndividualUserScoreList/>
+      </MTRow>
+      <MTRow>
+        <MTColumn offset={ 20 } width={ 60 } className="list-area">
+          <div className="list-area">
+            <IndividualUserScoreList/>
+            <RankingList/>
+          </div>
         </MTColumn>
       </MTRow>
     </div>

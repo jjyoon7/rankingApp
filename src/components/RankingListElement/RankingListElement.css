@@ -1,10 +1,10 @@
 .user-li {
     display: flex;
     justify-content: space-between;
-    /* max-width: 30%; */
+    max-width: 30%;
     /* background-color: red; */
 }
 
-.user-name-h2 {
+.user-name-h3 {
     cursor: pointer;
 }

@@ -34,9 +34,9 @@ function ContextProvider(props) {
         //it needs to be sorted, based on user's highest score
         if(prevValue.scoreArray !== undefined) {
             return currentValue.scoreArray[0] - prevValue.scoreArray[0]
-        }
+        } else return currentValue - prevValue
         //if it is comparing between scores in the user's scoreArray
-        return currentValue - prevValue
+        
     })
 
     const generateRandomId = () => {
@@ -53,6 +53,7 @@ function ContextProvider(props) {
     }
 
     const updateScoreArray = (keyValueToCompare, score, arrayToAdd, conditionToCompare) => {  
+        //instead of returning updated obj, return the parent array, with updated obj
         const arrayUpdatedNewScore = arrayToAdd.map(arrayObj => {
             
             // cannot use 'objectKeyAlreadyExists' because it uses .some()
@@ -67,8 +68,8 @@ function ContextProvider(props) {
                 isItSameKey = arrayObj.name.toLowerCase() === keyValueToCompare.toLowerCase()
             }
 
-            //with current data type, it is not needed
-            //could check for duplicated score here?
+            //with current data, where score value is not duplicated, it is not needed
+            //but could check for duplicated score here?
             const hasSameScore = arrayObj.scoreArray.includes(score)
             
             if(isItSameKey && !hasSameScore) {
@@ -82,7 +83,8 @@ function ContextProvider(props) {
         return arrayUpdatedNewScore
     }
 
-    const createNewUserObjWithScore = (userName, userScore) => {
+    //maybe comebine 'createNewUserObj'
+    const createNewUserObj = (userName, userScore) => {
         const id = generateRandomId()
 
         let newlyAddedScore
@@ -158,7 +160,10 @@ function ContextProvider(props) {
                     //but just in case if different initial user data is loaded
                     //and has extra users that does not match with reducedScoresArr
                     //create a new user object
-                    const newUserObj = createNewUserObjWithScore(userObj.name, userObj.score)
+                    //also consider if user object not having the score.
+                    //then need to create just empty score array, without score value
+                    //could update the 'createNewUserObj' considering this situations
+                    const newUserObj = createNewUserObj(userObj.name, userObj.score)
                     return newUserObj
                 }
             })
@@ -214,7 +219,7 @@ function ContextProvider(props) {
                 } else {
                     //create new user id
                     //and add its name and score and return that new user
-                    const newUserObj = createNewUserObjWithScore(data.name, data.scoreArray)                  
+                    const newUserObj = createNewUserObj(data.name, data.scoreArray)                  
                     return newUserObj
                 }
                 
@@ -263,7 +268,7 @@ function ContextProvider(props) {
                                     sortArrDescending,
                                     updateScoreArray,
                                     objectKeyAlreadyExists,
-                                    createNewUserObjWithScore,
+                                    createNewUserObj,
         }}>
             {props.children}
         </Context.Provider>

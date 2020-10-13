@@ -1,6 +1,83 @@
 @import "~mt-ui/lib/style.less";
 
+// * {
+//   color: #0000ea;
+// }
+
 .excel-dropzone__label {
   text-align: center;
   padding-top: 90px;
 }
+
+ul {
+  padding: 0;
+}
+
+.user-input-area {
+  display: grid;
+  // grid-template-columns: minmax(50px, 60px) 1rem minmax(50px, 60px);
+  grid-template-areas: "file-drop-area or-text form-area";
+  place-items: center;
+  justify-content: space-between;
+  // background-color: red;
+}
+
+.file-drop-area {
+  grid-area: file-drop-area;
+  // background-color: pink;
+}
+
+.or-text {
+  grid-area: or-text;
+  // max-width: 15%;
+  // background-color: rosybrown;
+}
+
+.form-area {
+  grid-area: form-area;
+  // max-width: 50%;
+  // background-color: aqua;
+}
+
+.list-area {
+  display: grid; 
+  grid-template-columns: repeat(2, minmax(50px, 1fr));
+  grid-template-areas: "ranking-list individual-score-list";
+  column-gap: 1rem;
+}
+
+.ranking-list {
+  grid-area: ranking-list;
+  margin-top: 1rem;
+}
+
+.individual-score-list {
+  grid-area: individual-score-list;
+  margin-top: 1rem;
+}
+
+// shadow effect
+.yellow-shadow {
+  -webkit-box-shadow: 6px 6px 18px 2px rgba(252,210,48,0.66);
+  -moz-box-shadow: 6px 6px 18px 2px rgba(252,210,48,0.66);
+  box-shadow: 6px 6px 18px 2px rgba(252,210,48,0.66);
+}
+
+.red-shadow {
+  -webkit-box-shadow: 6px 6px 18px 2px rgba(252,85,105,0.74);
+  -moz-box-shadow: 6px 6px 18px 2px rgba(252,85,105,0.74);
+  box-shadow: 6px 6px 18px 2px rgba(252,85,105,0.74);
+}
+
+.green-shadow {
+  -webkit-box-shadow: 6px 6px 18px 2px rgba(40,210,131,1);
+  -moz-box-shadow: 6px 6px 18px 2px rgba(40,210,131,1);
+  box-shadow: 6px 6px 18px 2px rgba(40,210,131,1);
+}
+
+.blue-shadow {
+  -webkit-box-shadow: 6px 6px 18px 2px rgba(37,147,252,1);
+  -moz-box-shadow: 6px 6px 18px 2px rgba(37,147,252,1);
+  box-shadow: 6px 6px 18px 2px rgba(37,147,252,1);
+}
+
