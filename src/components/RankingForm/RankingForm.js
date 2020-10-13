@@ -2,7 +2,13 @@ import React, { useState, useContext } from 'react'
 import { Context } from '../../Context'
 
 export default function RankingForm() {
-    const { usersArr, setUsersArr, updateScoreArray, sortArrDescending, addNewUser, objectKeyAlreadyExists } = useContext(Context)
+    const { usersArr, 
+            setUsersArr, 
+            updateScoreArray, 
+            sortArrDescending, 
+            createNewUserObjWithScore, 
+            objectKeyAlreadyExists } = useContext(Context)
+
     const [ userName, setUserName ] = useState('')
     const [ userScore, setUserScore ] = useState('')
 
@@ -12,18 +18,21 @@ export default function RankingForm() {
         e.preventDefault()
 
         const userAlreadyExists = objectKeyAlreadyExists(userName, usersArr, 'name')
-
+        
         if(userAlreadyExists) {
-            const clonedUsersArr = [...usersArr]
-
-            const userObjWithNewScore = updateScoreArray(userName, userScore, usersArr, 'name')
-
-            clonedUsersArr.push(userObjWithNewScore)
-            sortArrDescending(clonedUsersArr)
-            setUsersArr(clonedUsersArr)
+            const updatedArrayWithObjWithNewScore = updateScoreArray(userName, userScore, usersArr, 'name')
+            console.log('updatedArrayWithObjWithNewScore in form', updatedArrayWithObjWithNewScore)
+            sortArrDescending(updatedArrayWithObjWithNewScore)
+            setUsersArr(updatedArrayWithObjWithNewScore)
 
         } else if(!userAlreadyExists) {
-            addNewUser(userName, userScore)   
+            const clonedUsersArr = [...usersArr]
+            const newUserObj = createNewUserObjWithScore(userName, userScore)
+
+            clonedUsersArr.push(newUserObj)
+
+            const newlyAddedUsers = sortArrDescending(clonedUsersArr)
+            setUsersArr(newlyAddedUsers)
         }
 
         setUserName('')
