@@ -1,8 +1,7 @@
 .user-li {
     display: flex;
     justify-content: space-between;
-    max-width: 30%;
-    /* background-color: red; */
+    max-width: 60%;
 }
 
 .user-name-h3 {

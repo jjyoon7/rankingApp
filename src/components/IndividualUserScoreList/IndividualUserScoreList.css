@@ -1,7 +1,14 @@
+ul {
+    list-style-type: none;
+}
+
 .user-score-list-div {
-    /* background-color: red; */
-    display: grid;
-    padding: 1rem;
+    padding: 2rem;
     border: 1px dotted;
     border-radius: 2%;
+}
+
+.user-score-list-h3 {
+    margin: 0;
+    padding: 0;
 }
