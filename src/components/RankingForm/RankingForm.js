@@ -14,9 +14,13 @@ export default function RankingForm() {
         const userAlreadyExists = objectKeyAlreadyExists(userName, usersArr, 'name')
 
         if(userAlreadyExists) {
-            const updatedArrayWithNewScore = updateScoreArray(userName, userScore, usersArr, 'name')
-            sortArrDescending(updatedArrayWithNewScore)
-            setUsersArr(updatedArrayWithNewScore)
+            const clonedUsersArr = [...usersArr]
+
+            const userObjWithNewScore = updateScoreArray(userName, userScore, usersArr, 'name')
+
+            clonedUsersArr.push(userObjWithNewScore)
+            sortArrDescending(clonedUsersArr)
+            setUsersArr(clonedUsersArr)
 
         } else if(!userAlreadyExists) {
             addNewUser(userName, userScore)   
