@@ -3,12 +3,15 @@ import { Context } from '../../Context'
 import './RankingListElement.css'
 
 export default function RankingListElement({ id, name, score }) {
-    const { usersArr, setUserScoreArr } = useContext(Context)
+    const { usersArr, 
+            setUserScoreArr, 
+            setUserName } = useContext(Context)
 
     const onClickUserName = () => {
         const scoresArrayWithMatchingId = usersArr.find(({_id}) => _id === id)
         const scoreArrayOfSelectedUser = scoresArrayWithMatchingId.scoreArray
         setUserScoreArr(scoreArrayOfSelectedUser) 
+        setUserName(name)
     }
 
     return (

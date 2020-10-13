@@ -2,9 +2,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Context } from '../../Context'
 
 export default function IndividualUserScoreList() {
-    const { usersArr, userScoreArr } = useContext(Context)
+    const { usersArr, 
+            userScoreArr, 
+            userName } = useContext(Context)
+
     const [ IndividualUserScoreList, setIndividualUserScoreList ] = useState(null)
     const hasIndividualSocre = userScoreArr.length > 0
+    const hasUserName  = userName !== ''
+
     useEffect(() => {
         const mappedScoreList = userScoreArr.map(score => {
             return <li key={score} className='score-li'>
@@ -17,6 +22,7 @@ export default function IndividualUserScoreList() {
 
     return (
         <div className='user-score-list-div'>
+            {hasUserName ? <h2>{userName}</h2> : ''}
             <ul className='user-score-list-ul'>
                 {hasIndividualSocre ? IndividualUserScoreList : 
                                       <h2>Click on user name to check individual score list</h2>

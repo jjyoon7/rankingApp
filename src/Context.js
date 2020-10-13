@@ -11,7 +11,7 @@ function ContextProvider(props) {
     //individual user's score array
     const [ userScoreArr, setUserScoreArr] = useState([])
     //
-    const [ userId, setUserId ] = useState('')
+    const [ userName, setUserName ] = useState('')
 
     //parsed excel data
     const [ parsedDataArr, setParsedDataArr ] = useState([])
@@ -109,7 +109,8 @@ function ContextProvider(props) {
             delete passedObj.score
             return passedObj
         } else if(Array.isArray(scoreToAdd)) {
-            
+            //if 'scoreToAdd' is an array
+            //use spread operator to add scores to the existing scoreArray.
             passedObj.scoreArray = []
             passedObj.scoreArray.push(...scoreToAdd)
             return passedObj
@@ -123,7 +124,7 @@ function ContextProvider(props) {
             const initialUsersArr = users
             const initialScoresArr = scores
 
-            //reduce the scores, according to its userId
+            //1. reduce the scores, according to its userId
             const reducedScoresArr = initialScoresArr.reduce((acc, cur) => {
                 const doesIdAlreadyExists = objectKeyAlreadyExists(cur.userId, acc, 'userId')
 
@@ -138,8 +139,7 @@ function ContextProvider(props) {
                 }
             }, [])
 
-            // console.log('reducedScoresArr', reducedScoresArr)
-
+            //2. add scores to the matching user obj
             const initialScoresAddedToInitialUsers = initialUsersArr.map(userObj => {
 
                 //check if user with given id exists in reducedScoresArr
@@ -163,6 +163,7 @@ function ContextProvider(props) {
                 }
             })
 
+            //3. update usersArr
             const orderedInitialUsers = sortArrDescending(initialScoresAddedToInitialUsers)
             setUsersArr(orderedInitialUsers)
 
@@ -190,8 +191,6 @@ function ContextProvider(props) {
                     return acc
                 }
             }, [])
-
-            // console.log('reducedParsedDataArr', reducedParsedDataArr)
 
             //2. after parsed data is reduced,
             //compare that reducedParsedArry with usersArr
@@ -221,7 +220,7 @@ function ContextProvider(props) {
                 
             })
 
-            //if there is a users, which does not match with parsed data name
+            //3. if there are users, which does not match with parsed data name
             //need to add those, and not leave them out when re-render the usersArr with updated Parsed data.
             //Q.is it better to create separate function for this part? 
             const userObjNotMatchingWithParsedDatasName = usersArr.filter(data => {
@@ -242,6 +241,7 @@ function ContextProvider(props) {
                 newUsersArrWithParsedData = [...orderedUsersArrWithParsedScores]
             }
 
+            //4. update usersArr
             sortArrDescending(newUsersArrWithParsedData)
             setUsersArr(newUsersArrWithParsedData)
 
@@ -256,8 +256,8 @@ function ContextProvider(props) {
                                     setUsersArr,
                                     userScoreArr,
                                     setUserScoreArr,
-                                    userId, 
-                                    setUserId,
+                                    userName,
+                                    setUserName,
                                     parsedDataArr,
                                     setParsedDataArr,
                                     sortArrDescending,
