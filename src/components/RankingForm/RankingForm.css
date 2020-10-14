@@ -1,11 +1,6 @@
 .ranking-form-div {
     display: grid;
     place-items: center center;
-    border: 1px solid;
-    border-radius: 2%;
-    margin-bottom: 1rem;
-    animation: float 5s ease-in-out 2;
-    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
 }
 
 .ranking-form {
@@ -13,7 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 0.5rem;
-    max-width: 200px;
+    /* max-width: 200px; */
 }
 
 .ranking-form-input {
@@ -53,12 +48,12 @@ input[type=submit]:focus {
 
 @media (max-width: 1160px) {
     .ranking-form {
-        max-width: 160px;
+        /* max-width: 160px; */
     }
 }
 
 @media (max-width: 996px) {
     .ranking-form {
-        max-width: 124px;
+        /* max-width: 124px; */
     }
 }

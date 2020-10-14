@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { MTRow, MTColumn } from 'mt-ui'
+// import { MTRow, MTColumn } from 'mt-ui'
 import ExcelDropzone from './excel-dropzone.jsx'
 
 import { Context } from './Context'
@@ -18,28 +18,18 @@ export default function Main() {
 
   return (
     <div className="root-grid">
-        <div id="space">
-          <div className="stars"></div>
-          <div className="stars"></div>
-          <div className="stars"></div>
-          <div className="stars"></div>
-        </div>
           <div className="app-title-div">
-            <h1 className="app-title title-ran">Ran-</h1>
-            <h1 className="app-title title-king">King<i className="ri-vip-crown-line"></i></h1>
-            <h1 className="app-title title-app">App</h1>
+            <h3 className="app-title">The Ranking App</h3>
           </div>
-          <div className="app-content-column-1">
-            <ExcelDropzone
-              onSheetDrop={handleSheetData}
-              label="Drop your file here"
-            />
+          <ExcelDropzone
+            onSheetDrop={handleSheetData}
+            label="Drop your file here"
+          />
+          <div className="podium-center">
             <RankingList/>
+            {/* <IndividualUserScoreList/> */}
           </div>
-          <div className="app-content-column-2">
-            <RankingForm/>
-            <IndividualUserScoreList/>
-          </div>
+          <RankingForm/>   
     </div>
   )
   

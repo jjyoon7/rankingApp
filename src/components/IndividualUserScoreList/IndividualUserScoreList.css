@@ -1,37 +1,8 @@
 .user-score-list-div {
     display: grid;
     padding: 1.5rem;
-    border: 1px solid;
-    border-radius: 2%;
-    animation: float 4s ease-in-out 2;
-    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
 }
 
-.score-li:first-child {
-    animation: highlight 0.5s 1;
-}
-
-@keyframes highlight {
-    0% {
-      opacity: 1;
-      animation-timing-function: ease-in;
-    } 
-    20% {
-      opacity: 0;
-      animation-timing-function: linear;
-    }
-    40% {
-        opacity: 1;
-        animation-timing-function: linear;
-    }
-    80% {
-        opacity: 0;
-        animation-timing-function: linear;
-    }
-    100% {
-      opacity: 1;
-    }
-}
 
 @media (max-width: 1160px) {
     .user-score-list-h3 {

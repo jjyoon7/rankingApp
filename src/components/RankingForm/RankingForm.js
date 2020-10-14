@@ -55,7 +55,7 @@ export default function RankingForm() {
     }
 
     return (
-        <div className="ranking-form-div div-block-style">
+        <div className="ranking-form-div podium-left">
            <form className="ranking-form" onSubmit={onSubmitRankingForm}>
                 <label htmlFor="name">Name</label>
                 <input className="ranking-form-input" id="name" type="text" value={name} onChange={onChangeName}/>

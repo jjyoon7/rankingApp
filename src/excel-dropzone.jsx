@@ -19,7 +19,7 @@ function ExcelDropzone (props) {
   }
   
   return (
-    <div className="div-block-style">
+    <div className="podium-right">
       <Dropzone
         multiple={ false }
         onDrop={ handleFile }
