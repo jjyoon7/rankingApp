@@ -18,6 +18,7 @@ export default function RankingList() {
 
     return (
         <div className='ranking-list-div podium-center-list'>
+            <h1>1</h1>
             <h2>List</h2>
             <ul className='ranking-list-ul'>
                 {rankingList}

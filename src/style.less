@@ -48,14 +48,13 @@ h3, h4 {
 .root-grid {
   display: grid;
   // place-items: center center;
-  grid-template-rows: minmax(3rem, 9rem) repeat(3, minmax(70px, 170px)) repeat(2, minmax(1rem, 3rem));
+  grid-template-rows: minmax(6rem, 280px) repeat(3, minmax(70px, 140px)) repeat(2, minmax(1rem, 3rem));
   grid-template-columns: repeat(5, minmax(70px, 1fr));
   // column-gap: 1rem;
   grid-template-areas:" . . . . . " 
                       " . . podium-center . . "
                       " . podium-left podium-center . . "
                       " . podium-left podium-center podium-right . "
-                      " . . . . . "
                       " . . app-title-div . . "
                       " . . . . .";
   // display: flex;
@@ -63,6 +62,7 @@ h3, h4 {
 }
 
 .app-title-div {
+  padding: 2rem;
   // align-self: flex-end;
   grid-area: app-title-div;
   // min-height: 100%;
