@@ -1,5 +1,20 @@
 .ranking-list-div {
-    padding: 2rem;
+    padding: 1.5rem;
     border: 1px dotted;
     border-radius: 2%;
+    display: grid;
+    animation: float 7s ease-in-out 1;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+}
+
+@media (max-width: 1060px) {
+    .ranking-list-div {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 996px) {
+    .ranking-list-div {
+        padding: 0.7rem;
+    }
 }

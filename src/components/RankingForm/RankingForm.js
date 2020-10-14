@@ -21,7 +21,7 @@ export default function RankingForm() {
         e.preventDefault()
         const hasNoUserInput = !name || !score
         if(hasNoUserInput) {
-            setError('Cannot submit empty form!')
+            setError('Cannot submit empty')
         } else {
             const userAlreadyExists = objectKeyAlreadyExists(name, usersArr, 'name')
         
@@ -55,17 +55,17 @@ export default function RankingForm() {
     }
 
     return (
-        <div className="ranking-form-div form-area">
-            <form className="ranking-form" onSubmit={onSubmitRankingForm}>
+        <div className="ranking-form-div div-block-style">
+           <form className="ranking-form" onSubmit={onSubmitRankingForm}>
                 <label htmlFor="name">Name</label>
-                <input id="name" type="text" value={name} onChange={onChangeName}/>
+                <input className="ranking-form-input" id="name" type="text" value={name} onChange={onChangeName}/>
 
                 <label htmlFor="score">Score</label>
-                <input id="score" type="text" value={score} onChange={onChangeScore}/>
+                <input className="ranking-form-input" id="score" type="text" value={score} onChange={onChangeScore}/>
 
                 <input className="ranking-form-button" type="submit" value="Add"/>
+                <p className="form-sumbit-error-p">{error}</p>
             </form>
-            {error}
         </div>
     )
 }

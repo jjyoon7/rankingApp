@@ -17,8 +17,8 @@ export default function RankingListElement({ id, name, score }) {
 
     return (
         <li className='user-li'>
-            <h3 className='user-name-h3' onClick={onClickUserName}>{name}</h3>
-            <h3>{score}</h3>
+            <h4 className='user-name-h3' onClick={onClickUserName}>{name}</h4>
+            <h4>{score}</h4>
         </li>
     )
 }

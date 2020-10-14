@@ -14,37 +14,32 @@ export default function Main() {
   const handleSheetData = (data) => {
     //saved the data in parsedDataArr
     setParsedDataArr(data)
-    // console.log('data from sheet',data)
   }
 
   return (
-    <div className="container container--centered">
-      <MTRow>
-        <MTColumn offset={ 20 } width={ 60 }>
-          <h1 className="m-t">Ranking app</h1>
-        </MTColumn>
-      </MTRow>
-      <MTRow>
-        <MTColumn offset={ 20 } width={ 60 }>
-          <div className="user-input-area">
+    <div className="root-grid">
+        <div id="space">
+          <div className="stars"></div>
+          <div className="stars"></div>
+          <div className="stars"></div>
+          <div className="stars"></div>
+        </div>
+          <div className="app-title-div">
+            <h1 className="app-title title-ran">Ran-</h1>
+            <h1 className="app-title title-king">King<i className="ri-vip-crown-line"></i></h1>
+            <h1 className="app-title title-app">App</h1>
+          </div>
+          <div className="app-content-column-1">
             <ExcelDropzone
               onSheetDrop={handleSheetData}
               label="Drop your file here"
-              className="file-drop-area"
             />
-            <h2 className="or-text">or</h2>
-            <RankingForm/>
-          </div>
-        </MTColumn>
-      </MTRow>
-      <MTRow>
-        <MTColumn offset={ 20 } width={ 60 } className="list-area">
-          <div className="list-area">
-            <IndividualUserScoreList/>
             <RankingList/>
           </div>
-        </MTColumn>
-      </MTRow>
+          <div className="app-content-column-2">
+            <RankingForm/>
+            <IndividualUserScoreList/>
+          </div>
     </div>
   )
   

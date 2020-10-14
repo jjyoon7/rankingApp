@@ -23,13 +23,12 @@ export default function IndividualUserScoreList() {
     }, [ userScoreArr, usersArr ])
 
     return (
-        <div className='user-score-list-div individual-score-list'>
+        <div className='user-score-list-div individual-score-list div-block-style'>
             {hasUserName ? <h2>{userName}</h2> : 
                            <h3 className="user-score-list-h3">Click on user name to check user's individual score list</h3>
             }
             <ul className='user-score-list-ul'>
-                {hasIndividualSocre ? IndividualUserScoreList : ''}
-                                      
+                {hasIndividualSocre ? IndividualUserScoreList : ''}                  
             </ul>
         </div>
     )

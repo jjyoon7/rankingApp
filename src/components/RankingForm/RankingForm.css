@@ -1,17 +1,64 @@
 .ranking-form-div {
     display: grid;
+    place-items: center center;
     border: 1px solid;
-    padding: 1.5rem;
-    height: 200px;
     border-radius: 2%;
+    margin-bottom: 1rem;
+    animation: float 5s ease-in-out 2;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
 }
 
 .ranking-form {
-    display: grid;
-    place-items: center start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+    max-width: 200px;
+}
+
+.ranking-form-input {
+    height: 1.5rem;
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 3%;
+    background-color: transparent;
 }
 
 .ranking-form-button {
-    min-width: 100%;
+    border-radius: 3%;
+    background-color: white;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(173,51,255,1);
 }
 
+input[type=submit]:hover,
+input[type=submit]:focus {
+    background-color: transparent;
+    color: white
+}
+
+.ranking-form-button:hover {
+    border-radius: 3%;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+.form-sumbit-error-p {
+    font-size: 0.6rem;
+}
+
+@media (max-width: 1160px) {
+    .ranking-form {
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 996px) {
+    .ranking-form {
+        max-width: 124px;
+    }
+}

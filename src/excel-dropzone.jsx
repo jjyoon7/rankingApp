@@ -19,12 +19,15 @@ function ExcelDropzone (props) {
   }
   
   return (
-    <Dropzone
-      multiple={ false }
-      onDrop={ handleFile }
-    >
-      <p className="excel-dropzone__label">{ label }</p>
-    </Dropzone>
+    <div className="div-block-style">
+      <Dropzone
+        multiple={ false }
+        onDrop={ handleFile }
+        className="drop-zone-custom-style"
+      >
+        <p className="excel-dropzone__label">{ label }</p>
+      </Dropzone>
+    </div>
   )
 }
 
