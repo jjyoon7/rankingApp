@@ -1,0 +1,41 @@
+.podium {
+  grid-area: podium;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(70px, 80px));
+  grid-template-columns: repeat(3, minmax(50px, 1fr));
+  grid-template-areas: ". podium-center ." 
+                       "podium-left podium-center ." 
+                       "podium-left podium-center podium-right";
+}
+
+.podium-left {
+  grid-area: podium-left;
+  min-height: 100%;
+}
+
+.podium-center {
+  grid-area: podium-center;
+  min-height: 100%;
+}
+
+.podium-right {
+  grid-area: podium-right;
+  min-height: 100%;
+}
+
+.podium-div-style {
+    background-color: white;
+}
+
+.podium-name {
+    /* background-color: red; */
+    margin-top: -40px;
+    text-align: center;
+}
+
+
+
+
+
+
+  
