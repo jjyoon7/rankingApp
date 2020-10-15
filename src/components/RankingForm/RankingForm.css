@@ -4,7 +4,6 @@
     border: 1px dotted #bee7d4;
     border-radius: 1%;
     min-height: 40%;
-    /* border-style: ridge; */
     border-style: double;
     border-width: 6px;
 }
@@ -14,7 +13,6 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 0.5rem;
-    /* max-width: 200px; */
 }
 
 .ranking-form-input {
@@ -22,7 +20,6 @@
     box-sizing: border-box;
     border: 1px solid #bee7d4;
     border-radius: 3%;
-    /* background-color: transparent; */
 }
 
 .ranking-form-button {
@@ -41,19 +38,13 @@ input[type=submit]:focus {
     border: 1px solid #ff7300;
     color: #062e5d;
 }
-/* 
-.ranking-form-button:hover {
-    border-radius: 3%;
-    background-color: #ff7300;
-    border: 1px solid #ff7300;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-} */
 
 .form-sumbit-error-p {
     text-align: center;
     font-size: 0.6rem;
 }
+
+/* media query */
 
 @media (max-width: 1160px) {
     .ranking-form {

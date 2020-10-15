@@ -28,11 +28,17 @@
 }
 
 .podium-name {
-    /* background-color: red; */
     color: #ff7300;
     margin-top: -40px;
     text-align: center;
     font-weight: 400;
+}
+
+.podium-medal {
+    color: #ff7300;
+    margin-top: -70px;
+    text-align: center;
+    font-size: 2rem;
 }
 
 .number-typeface {
@@ -43,28 +49,27 @@
     color: black;
 }
 
-
-
+/* media query*/
 
 @media (max-width: 996px) {
     .podium-name {
-        /* background-color: red; */
-        /* color: #ff7300; */
         margin-top: -30px;
-        /* text-align: center; */
-        /* font-weight: 400; */
         font-size: 1.25rem;
     }
+    .podium-medal {
+        margin-top: -60px;
+    }
+    
 }
 
 @media (max-width: 670px) {
     .podium-name {
-        /* background-color: red; */
-        /* color: #ff7300; */
         margin-top: -24px;
-        /* text-align: center; */
-        /* font-weight: 400; */
         font-size: 1rem;
+    }
+    .podium-medal {
+        margin-top: -48px;
+        font-size: 1.5rem;
     }
   }
 

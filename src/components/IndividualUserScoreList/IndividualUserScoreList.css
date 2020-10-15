@@ -5,7 +5,7 @@
 }
 
 .score-li:first-child {
-    color: #ff7300;
+    text-decoration: underline;
 }
 
 
