@@ -5,6 +5,7 @@
 
 .user-li:first-child {
     animation: highlight 0.5s 1;
+    animation-delay: 1.5s;
 }
 
 .user-name-h3 {
