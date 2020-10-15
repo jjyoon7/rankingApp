@@ -19,17 +19,30 @@ export default function Main() {
   return (
     <div className="root-grid">
           <div className="app-title-div">
-            <h3 className="app-title">The Ranking App</h3>
+            <h3 className="app-title">The podium</h3>
           </div>
-          <ExcelDropzone
-            onSheetDrop={handleSheetData}
-            label="Drop your file here"
-          />
-          <div className="podium-center">
+          <div className="column-left-input">
+            <ExcelDropzone
+              onSheetDrop={handleSheetData}
+              label="Drop your file here"
+            />
+            <RankingForm/>   
+          </div>
+          <div className="podium">
+              <div className="podium-div-style podium-left">
+                <h1 className='number-typeface'>2</h1>
+              </div>
+              <div className="podium-div-style podium-center">
+                <h1 className='number-typeface'>1</h1>
+              </div>
+              <div className="podium-div-style podium-right">
+                <h1 className='number-typeface'>3</h1>
+              </div>
+          </div>
+          <div className="column-right-list">
             <RankingList/>
-            {/* <IndividualUserScoreList/> */}
+            <IndividualUserScoreList/>
           </div>
-          <RankingForm/>   
     </div>
   )
   

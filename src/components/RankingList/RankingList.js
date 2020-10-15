@@ -17,8 +17,7 @@ export default function RankingList() {
     }, [ usersArr ])
 
     return (
-        <div className='ranking-list-div podium-center-list'>
-            <h1>1</h1>
+        <div className='ranking-list-div'>
             <h2>List</h2>
             <ul className='ranking-list-ul'>
                 {rankingList}
