@@ -14,35 +14,38 @@
 .ranking-form-input {
     height: 1.5rem;
     box-sizing: border-box;
-    border: 1px solid white;
+    border: 1px solid #bee7d4;
     border-radius: 3%;
     background-color: transparent;
 }
 
 .ranking-form-button {
     border-radius: 3%;
-    background-color: white;
-    border: 1px solid white;
+    background-color: #bee7d4;
+    border: 1px solid #bee7d4;
     padding: 0.5rem 1rem;
     text-decoration: none;
     cursor: pointer;
-    color: rgba(173,51,255,1);
+    color: #062e5d;
 }
 
 input[type=submit]:hover,
 input[type=submit]:focus {
-    background-color: transparent;
-    color: white
+    background-color: #ff7300;
+    border: 1px solid #ff7300;
+    color: #062e5d;
 }
-
+/* 
 .ranking-form-button:hover {
     border-radius: 3%;
-    border: 1px solid white;
+    background-color: #ff7300;
+    border: 1px solid #ff7300;
     padding: 0.5rem 1rem;
     text-decoration: none;
-}
+} */
 
 .form-sumbit-error-p {
+    text-align: center;
     font-size: 0.6rem;
 }
 

@@ -28,7 +28,7 @@ export default function Main() {
           </div>
           <Podium/>
           <div className="app-title-div">
-            <h3 className="app-title">The podium</h3>
+            <h1 className="app-title">The podium</h1>
           </div>
           <div className="column-right-list">
             <RankingList/>
