@@ -202,6 +202,29 @@ h3, h4 {
   }
 }
 
+//animation to highlight score
+@keyframes highlight {
+  0% {
+    opacity: 1;
+    animation-timing-function: ease-in;
+  } 
+  20% {
+    opacity: 0;
+    animation-timing-function: linear;
+  }
+  40% {
+      opacity: 1;
+      animation-timing-function: linear;
+  }
+  80% {
+      opacity: 0;
+      animation-timing-function: linear;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 1060px) {
   h1 {
     font-size: 6.2rem;
