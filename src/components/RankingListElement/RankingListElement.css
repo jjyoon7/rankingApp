@@ -1,12 +1,13 @@
 .user-li {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px dotted #bee7d4;
 }
 
-.user-li:first-child {
-    color: #ff7300;
-}
-
-.user-name-h3 {
+.user-name-h4 {
     cursor: pointer;
+}
+
+.user-score-h4 {
+    color: #ff7300;
 }

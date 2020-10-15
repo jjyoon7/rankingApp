@@ -1,11 +1,7 @@
 .ranking-form-div {
     display: grid;
     place-items: center center;
-    border: 1px dotted #bee7d4;
-    border-radius: 1%;
     min-height: 40%;
-    border-style: double;
-    border-width: 6px;
 }
 
 .ranking-form {

@@ -1,8 +1,11 @@
 .ranking-list-div {
     padding: 1rem;
     display: grid;
-    border: 1px solid #bee7d4;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.ranking-list-title {
+    border-bottom: 2px solid #bee7d4;
 }
 
 @media (max-width: 1060px) {
