@@ -16,6 +16,8 @@
     box-sizing: border-box;
     border: 1px solid #bee7d4;
     border-radius: 3%;
+    color: #ff7300;
+    padding: 0.25rem;
 }
 
 .ranking-form-button {
