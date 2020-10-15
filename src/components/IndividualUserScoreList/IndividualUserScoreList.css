@@ -1,6 +1,11 @@
 .user-score-list-div {
     display: grid;
-    padding: 1.5rem;
+    padding: 1rem;
+    border: 1px dotted #bee7d4;
+}
+
+.score-li:first-child {
+    text-decoration: underline;
 }
 
 
