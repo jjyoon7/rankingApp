@@ -1,7 +1,7 @@
 .user-li {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px dotted #bee7d4;
+    border-bottom: 1px dotted #caeddd;
 }
 
 .user-name-h4 {

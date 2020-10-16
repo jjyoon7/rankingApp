@@ -4,11 +4,11 @@
 }
 
 .user-score-list-h2 {
-    border-bottom: 2px solid #bee7d4;
+    border-bottom: 2px solid #caeddd;
 }
 
 .score-li {
-    border-bottom: 1px dotted #bee7d4;
+    border-bottom: 1px dotted #caeddd;
 }
 
 .score-li:first-child {

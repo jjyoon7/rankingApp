@@ -14,7 +14,7 @@
 .ranking-form-input {
     height: 1.5rem;
     box-sizing: border-box;
-    border: 1px solid #bee7d4;
+    border: 1px solid #caeddd;
     border-radius: 3%;
     color: #ff7300;
     padding: 0.25rem;
@@ -22,8 +22,8 @@
 
 .ranking-form-button {
     border-radius: 3%;
-    background-color: #bee7d4;
-    border: 1px solid #bee7d4;
+    background-color: #caeddd;
+    border: 1px solid #caeddd;
     padding: 0.5rem 1rem;
     text-decoration: none;
     cursor: pointer;
