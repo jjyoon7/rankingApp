@@ -53,11 +53,12 @@ h3, h4 {
 // layout
 .root-grid {
   display: grid;
+  column-gap: 1rem;
   grid-template-rows: minmax(1rem, 2rem) minmax(500px, 3fr) minmax(1rem, 2rem);
-  grid-template-columns: minmax(1rem, 3rem) repeat(5, minmax(50px, 1fr)) minmax(1rem, 3rem);
-  grid-template-areas:". . . . . . ." 
-                      ". app-title-div app-title-div app-title-div app-content-column-1 app-content-column-2 ."
-                      ". . . . . . ." ;
+  grid-template-columns: minmax(2rem, 3rem) minmax(300px, 2.4fr) repeat(2, minmax(50px, 1fr)) minmax(2rem, 3rem);
+  grid-template-areas:". . . . ." 
+                      ". app-title-div app-content-column-1 app-content-column-2 ."
+                      ". . . . ." ;
 }
 
 .app-title-div {
@@ -65,15 +66,9 @@ h3, h4 {
   margin-top: 80px;
 }
 
-.app-title {
-  vertical-align: baseline;
-  transform: translateX(-100%);
-}
-
 .app-content-column-1 {
   grid-area: app-content-column-1;
   margin-top: 60px;
-  margin-right: 1rem;
 }
 
 .app-content-column-2 {
@@ -95,30 +90,10 @@ h3, h4 {
   cursor: pointer;
   animation: float 5s ease-in-out 1;
   box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+  margin-right: 1rem;
 }
 
 // animation
-
-//app title animation
-.title-ran {
-  animation: animate-from-left 0.8s ease-in-out forwards;
-}
-
-.title-king {
-  animation: animate-from-left 1s ease-in-out forwards;
-  animation-delay: 0.1s;
-}
-
-.title-app {
-  animation: animate-from-left 1s ease-in-out forwards;
-  animation-delay: 0.2s;
-}
-
-@keyframes animate-from-left {
-  to {
-    transform:translateX(0);
-  }
-}
 
 //floating div animation
 @keyframes float {
@@ -134,72 +109,6 @@ h3, h4 {
 		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
 		transform: translatey(0px);
 	}
-}
-
-//background star animation
-#space, .stars {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.stars {
-  background-image: 
-    radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 160px 120px, #ddd, rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  animation: zoom 4s 1;
-}
-
-.stars:nth-child(1) {
-  background-position: 50% 50%;
-  animation-delay: 0s;
-}
-.stars:nth-child(2) {
-  background-position: 20% 60%;
-  animation-delay: 0.2s;
-}
-.stars:nth-child(3) {
-  background-position: -20% -30%;
-  animation-delay: 0.7s;
-}
-.stars:nth-child(4) {
-  background-position: 40% -80%;
-  animation-delay: 0.9s;
-}
-
-@keyframes zoom {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-    animation-timing-function: ease-in;
-  } 
-  25% {
-    opacity: 1;
-    transform: scale(2.8);
-    animation-timing-function: linear;
-  }
-  80% {
-    opacity: 0;
-    transform: scale(3.5);
-  }
-}
-
-@media (max-width: 1160px) {
-  h1 {
-    font-size: 7rem;
-  }
-  .app-title-div {
-    margin-top: 100px;
-  }
 }
 
 //animation to highlight score
@@ -225,15 +134,35 @@ h3, h4 {
   }
 }
 
-@media (max-width: 1060px) {
+
+//media query
+
+@media (max-width: 1370px) {
   h1 {
-    font-size: 6.2rem;
+    font-size: 7rem;
   }
   .app-title-div {
-    margin-top: 140px;
+    margin-top: 110px;
   }
 }
 
+@media (max-width: 1360px) {
+  h1 {
+    font-size: 6rem;
+  }
+  .app-title-div {
+    margin-top: 125px;
+  }
+}
+
+@media (max-width: 1090px) {
+  h1 {
+    font-size: 5.5rem;
+  }
+  .app-title-div {
+    margin-top: 150px;
+  }
+}
 @media (max-width: 996px) {
   h1 {
     font-size: 5rem;

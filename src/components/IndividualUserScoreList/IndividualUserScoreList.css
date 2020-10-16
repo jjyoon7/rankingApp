@@ -5,6 +5,7 @@
     border-radius: 2%;
     animation: float 4s ease-in-out 2;
     box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+    margin-right: 2rem;
 }
 
 .score-li:first-child {

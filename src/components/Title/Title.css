@@ -1,0 +1,25 @@
+.app-title {
+    vertical-align: baseline;
+    transform: translateX(-100%);
+}
+
+/* app title animation */
+.title-ran {
+  animation: animate-from-left 0.8s ease-in-out forwards;
+}
+
+.title-king {
+  animation: animate-from-left 1s ease-in-out forwards;
+  animation-delay: 0.1s;
+}
+
+.title-app {
+  animation: animate-from-left 1s ease-in-out forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes animate-from-left {
+  to {
+    transform:translateX(0);
+  }
+}

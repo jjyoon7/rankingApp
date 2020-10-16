@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { MTRow, MTColumn } from 'mt-ui'
+// import { MTRow, MTColumn } from 'mt-ui'
 import ExcelDropzone from './excel-dropzone.jsx'
 
 import { Context } from './Context'
@@ -7,6 +7,8 @@ import { Context } from './Context'
 import RankingList from './components/RankingList/RankingList'
 import IndividualUserScoreList from './components/IndividualUserScoreList/IndividualUserScoreList'
 import RankingForm from './components/RankingForm/RankingForm'
+import Stars from './components/Stars/Stars'
+import Title from './components/Title/Title.js'
 
 export default function Main() {
   const { setParsedDataArr } = useContext(Context)
@@ -18,17 +20,8 @@ export default function Main() {
 
   return (
     <div className="root-grid">
-        <div id="space">
-          <div className="stars"></div>
-          <div className="stars"></div>
-          <div className="stars"></div>
-          <div className="stars"></div>
-        </div>
-          <div className="app-title-div">
-            <h1 className="app-title title-ran">Ran-</h1>
-            <h1 className="app-title title-king">King<i className="ri-vip-crown-line"></i></h1>
-            <h1 className="app-title title-app">App</h1>
-          </div>
+          <Stars/>
+          <Title/>
           <div className="app-content-column-1">
             <ExcelDropzone
               onSheetDrop={handleSheetData}
