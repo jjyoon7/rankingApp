@@ -11,3 +11,22 @@
 .user-name-h3 {
     cursor: pointer;
 }
+
+/* media query */
+@media (max-width: 1160px) {
+    .user-name-h3, .user-score-h3 {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 1160px) {
+    .user-name-h3, .user-score-h3 {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 996px) {
+    .user-name-h3, .user-score-h3 {
+        font-size: 0.7rem;
+    }
+}

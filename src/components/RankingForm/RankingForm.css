@@ -53,14 +53,27 @@ input[type=submit]:focus {
     font-size: 0.6rem;
 }
 
-@media (max-width: 1160px) {
+/* media query */
+@media (max-width: 1240px) {
     .ranking-form {
         max-width: 160px;
+    }
+}
+
+@media (max-width: 1160px) {
+    .ranking-form {
+        max-width: 140px;
     }
 }
 
 @media (max-width: 996px) {
     .ranking-form {
         max-width: 124px;
+    }
+}
+
+@media (max-width: 900px) {
+    .ranking-form {
+        max-width: 100px;
     }
 }

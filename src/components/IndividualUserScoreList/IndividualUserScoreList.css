@@ -12,15 +12,26 @@
     animation: highlight 0.5s 1;
 }
 
+/* media query */
+
+@media (max-width: 1360px) {
+    .user-score-list-h3 {
+        font-size: 1rem;
+    }
+}
+
 @media (max-width: 1160px) {
     .user-score-list-h3 {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 }
 
 @media (max-width: 1060px) {
+    .user-score-list-div {
+        padding: 1rem;
+    }
     .user-score-list-h3 {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 }
 
@@ -34,12 +45,22 @@
     }
 }
 
-@media (max-width: 930px) {
+@media (max-width: 950px) {
+    .user-score-list-div {
+        padding: 0.8rem;
+    }
     .user-score-list-h3 {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
     .score-li {
         font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .user-score-list-h3 {
+        font-size: 0.55rem;
+        max-width: 70px;
     }
 }
