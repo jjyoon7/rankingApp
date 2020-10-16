@@ -1,6 +1,9 @@
 .user-score-list-div {
     display: grid;
     padding: 1rem;
+    /* need a background color for just in case  */
+    /* its a small screen and the list overlapps with the title */
+    background-color: #062e5d;
 }
 
 .user-score-list-h2 {

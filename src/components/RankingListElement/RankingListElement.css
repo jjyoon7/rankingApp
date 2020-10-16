@@ -11,3 +11,9 @@
 .user-score-h4 {
     color: #ff7300;
 }
+
+@media (max-width: 745px) {
+    .user-name-h4, .user-score-h4 {
+        font-size: 0.75rem;
+    }
+}
